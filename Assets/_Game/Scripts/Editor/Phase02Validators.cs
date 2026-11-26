@@ -26,7 +26,7 @@ namespace Deadzone.EditorTools
                 if (definition.IsFunctional) functional++;
                 if (definition.IsFunctional && definition.prefab == null) problems.Add(definition.buildingId + ": functional building has no prefab");
             }
-            if (functional != 6) problems.Add("Expected 6 functional buildings, found " + functional);
+            if (functional != 7) problems.Add("Expected 7 functional buildings (6 PHASE 02 + Warehouse), found " + functional);
             return problems;
         }
 
@@ -55,6 +55,21 @@ namespace Deadzone.EditorTools
             foreach (GameConfig.StartingBuilding start in config.startingBuildings)
             {
                 if (database.Get(start.buildingId) == null) problems.Add("Starting building '" + start.buildingId + "' is not in the database");
+            }
+
+            // Every functional upgrade must stay payable: its cost may not exceed the capacity reachable with the Warehouse one level behind.
+            BuildingDefinition warehouseDef = database.definitions.Find(d => d != null && d.type == BuildingType.Warehouse);
+            if (warehouseDef != null && warehouseDef.IsFunctional)
+            {
+                for (int level = 2; level <= warehouseDef.maxLevel; level++)
+                {
+                    BuildingLevelData row = warehouseDef.GetLevel(level);
+                    long capacity = config.defaultResourceCapacity + (warehouseDef.GetLevel(level - 1)?.storageCapacity ?? 0);
+                    foreach (var cost in row.upgradeCost)
+                    {
+                        if (cost.amount > capacity) problems.Add("Warehouse L" + level + ": " + cost.type + " cost " + cost.amount + " exceeds the capacity " + capacity + " it can have at that point");
+                    }
+                }
             }
 
             foreach (BuildingDefinition definition in database.definitions)

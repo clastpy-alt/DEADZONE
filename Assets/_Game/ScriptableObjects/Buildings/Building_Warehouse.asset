@@ -15,7 +15,7 @@ MonoBehaviour:
   buildingId: warehouse
   type: 12
   category: 1
-  availability: 1
+  availability: 0
   nameKey: building.warehouse
   descriptionKey: building.warehouse.desc
   iconLabel: WH
@@ -26,7 +26,7 @@ MonoBehaviour:
     producesResource: 0
     resource: 0
     storageIsGlobal: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 8341189879725922393, guid: 843377400f1d51949a18172153bad4a4, type: 3}
   icon: {fileID: 0}
   balance:
     baseCost:
@@ -44,8 +44,8 @@ MonoBehaviour:
     powerExponent: 1.4
     productionBase: 0
     productionGrowth: 1.18
-    storageBase: 5000
-    storageGrowth: 1.2
+    storageBase: 20000
+    storageGrowth: 1.42
     hqLevelOffset: 1
   levels:
   - level: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 0
     powerContribution: 15
     productionPerHour: 0
-    storageCapacity: 5000
+    storageCapacity: 20000
     requirements: []
   - level: 2
     upgradeCost:
@@ -66,7 +66,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 30
     powerContribution: 40
     productionPerHour: 0
-    storageCapacity: 6000
+    storageCapacity: 28400
     requirements:
     - buildingId: headquarters
       level: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 120
     powerContribution: 70
     productionPerHour: 0
-    storageCapacity: 7200
+    storageCapacity: 40328
     requirements:
     - buildingId: headquarters
       level: 2
@@ -96,7 +96,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 300
     powerContribution: 104
     productionPerHour: 0
-    storageCapacity: 8640
+    storageCapacity: 57266
     requirements:
     - buildingId: headquarters
       level: 3
@@ -111,7 +111,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 900
     powerContribution: 143
     productionPerHour: 0
-    storageCapacity: 10368
+    storageCapacity: 81317
     requirements:
     - buildingId: headquarters
       level: 4
@@ -126,7 +126,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 1125
     powerContribution: 184
     productionPerHour: 0
-    storageCapacity: 12442
+    storageCapacity: 115471
     requirements:
     - buildingId: headquarters
       level: 5
@@ -141,7 +141,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 1406
     powerContribution: 229
     productionPerHour: 0
-    storageCapacity: 14930
+    storageCapacity: 163968
     requirements:
     - buildingId: headquarters
       level: 6
@@ -156,7 +156,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 1758
     powerContribution: 276
     productionPerHour: 0
-    storageCapacity: 17916
+    storageCapacity: 232835
     requirements:
     - buildingId: headquarters
       level: 7
@@ -171,7 +171,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 2197
     powerContribution: 325
     productionPerHour: 0
-    storageCapacity: 21499
+    storageCapacity: 330626
     requirements:
     - buildingId: headquarters
       level: 8
@@ -186,7 +186,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 2747
     powerContribution: 377
     productionPerHour: 0
-    storageCapacity: 25799
+    storageCapacity: 469489
     requirements:
     - buildingId: headquarters
       level: 9
@@ -201,7 +201,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 3433
     powerContribution: 431
     productionPerHour: 0
-    storageCapacity: 30959
+    storageCapacity: 666674
     requirements:
     - buildingId: headquarters
       level: 10
@@ -216,7 +216,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 4292
     powerContribution: 486
     productionPerHour: 0
-    storageCapacity: 37150
+    storageCapacity: 946677
     requirements:
     - buildingId: headquarters
       level: 11
@@ -231,7 +231,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 5364
     powerContribution: 544
     productionPerHour: 0
-    storageCapacity: 44581
+    storageCapacity: 1344281
     requirements:
     - buildingId: headquarters
       level: 12
@@ -246,7 +246,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 6706
     powerContribution: 603
     productionPerHour: 0
-    storageCapacity: 53497
+    storageCapacity: 1908879
     requirements:
     - buildingId: headquarters
       level: 13
@@ -261,7 +261,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 8382
     powerContribution: 665
     productionPerHour: 0
-    storageCapacity: 64196
+    storageCapacity: 2710607
     requirements:
     - buildingId: headquarters
       level: 14
@@ -276,7 +276,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 10477
     powerContribution: 728
     productionPerHour: 0
-    storageCapacity: 77035
+    storageCapacity: 3849063
     requirements:
     - buildingId: headquarters
       level: 15
@@ -291,7 +291,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 13097
     powerContribution: 792
     productionPerHour: 0
-    storageCapacity: 92442
+    storageCapacity: 5465669
     requirements:
     - buildingId: headquarters
       level: 16
@@ -306,7 +306,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 16371
     powerContribution: 858
     productionPerHour: 0
-    storageCapacity: 110931
+    storageCapacity: 7761249
     requirements:
     - buildingId: headquarters
       level: 17
@@ -321,7 +321,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 20464
     powerContribution: 925
     productionPerHour: 0
-    storageCapacity: 133117
+    storageCapacity: 11020974
     requirements:
     - buildingId: headquarters
       level: 18
@@ -336,7 +336,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 25580
     powerContribution: 994
     productionPerHour: 0
-    storageCapacity: 159740
+    storageCapacity: 15649782
     requirements:
     - buildingId: headquarters
       level: 19
@@ -351,7 +351,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 31974
     powerContribution: 1065
     productionPerHour: 0
-    storageCapacity: 191688
+    storageCapacity: 22222690
     requirements:
     - buildingId: headquarters
       level: 20
@@ -366,7 +366,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 39968
     powerContribution: 1136
     productionPerHour: 0
-    storageCapacity: 230026
+    storageCapacity: 31556218
     requirements:
     - buildingId: headquarters
       level: 21
@@ -381,7 +381,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 49960
     powerContribution: 1209
     productionPerHour: 0
-    storageCapacity: 276031
+    storageCapacity: 44809829
     requirements:
     - buildingId: headquarters
       level: 22
@@ -396,7 +396,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 62450
     powerContribution: 1283
     productionPerHour: 0
-    storageCapacity: 331237
+    storageCapacity: 63629955
     requirements:
     - buildingId: headquarters
       level: 23
@@ -411,7 +411,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 78063
     powerContribution: 1359
     productionPerHour: 0
-    storageCapacity: 397485
+    storageCapacity: 90354533
     requirements:
     - buildingId: headquarters
       level: 24
@@ -426,7 +426,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 97578
     powerContribution: 1436
     productionPerHour: 0
-    storageCapacity: 476982
+    storageCapacity: 128303433
     requirements:
     - buildingId: headquarters
       level: 25
@@ -441,7 +441,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 121973
     powerContribution: 1514
     productionPerHour: 0
-    storageCapacity: 572378
+    storageCapacity: 182190869
     requirements:
     - buildingId: headquarters
       level: 26
@@ -456,7 +456,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 152466
     powerContribution: 1593
     productionPerHour: 0
-    storageCapacity: 686853
+    storageCapacity: 258711027
     requirements:
     - buildingId: headquarters
       level: 27
@@ -471,7 +471,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 190582
     powerContribution: 1673
     productionPerHour: 0
-    storageCapacity: 824224
+    storageCapacity: 367369647
     requirements:
     - buildingId: headquarters
       level: 28
@@ -486,7 +486,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 238228
     powerContribution: 1754
     productionPerHour: 0
-    storageCapacity: 989069
+    storageCapacity: 521664883
     requirements:
     - buildingId: headquarters
       level: 29
@@ -501,7 +501,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 297785
     powerContribution: 1837
     productionPerHour: 0
-    storageCapacity: 1186883
+    storageCapacity: 740764111
     requirements:
     - buildingId: headquarters
       level: 30
@@ -516,7 +516,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 372231
     powerContribution: 1920
     productionPerHour: 0
-    storageCapacity: 1424260
+    storageCapacity: 1051885006
     requirements:
     - buildingId: headquarters
       level: 31
@@ -531,7 +531,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 465289
     powerContribution: 2005
     productionPerHour: 0
-    storageCapacity: 1709112
+    storageCapacity: 1493676664
     requirements:
     - buildingId: headquarters
       level: 32
@@ -546,7 +546,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 581611
     powerContribution: 2090
     productionPerHour: 0
-    storageCapacity: 2050934
+    storageCapacity: 2121020798
     requirements:
     - buildingId: headquarters
       level: 33
@@ -561,7 +561,7 @@ MonoBehaviour:
     upgradeDurationSeconds: 727014
     powerContribution: 2177
     productionPerHour: 0
-    storageCapacity: 2461121
+    storageCapacity: 3011849443
     requirements:
     - buildingId: headquarters
       level: 34

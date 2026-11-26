@@ -53,6 +53,25 @@ namespace Deadzone.UI
             if (avatarButton != null) avatarButton.onClick.RemoveListener(OnAvatarClicked);
         }
 
+        private void Start() => ShowOfflineCompletions();
+
+        /// <summary>Welcome-back toast for constructions that finished while the game was closed (shown once).</summary>
+        private static void ShowOfflineCompletions()
+        {
+            var finished = Game.ConsumeOfflineCompletions();
+            if (finished.Count == 0) return;
+
+            if (finished.Count == 1) ToastView.Show(ConstructionDoneText(finished[0].Key, finished[0].Value));
+            else ToastView.Show(string.Format(Loc.T("cq.done.many"), finished.Count));
+        }
+
+        private static string ConstructionDoneText(string buildingId, int level)
+        {
+            BuildingDefinition definition = Game.Buildings != null ? Game.Buildings.GetDefinition(buildingId) : null;
+            string name = definition != null ? Loc.T(definition.nameKey) : buildingId;
+            return string.Format(Loc.T("cq.done"), name, level);
+        }
+
         private void OnSaveClicked() => Game.Save(true);
 
         private void OnGameSaved(bool manual)
@@ -63,9 +82,7 @@ namespace Deadzone.UI
         /// <summary>Completion notification (also fires for constructions that finished while the game was closed).</summary>
         private void OnConstructionCompleted(string buildingId, int level)
         {
-            BuildingDefinition definition = Game.Buildings != null ? Game.Buildings.GetDefinition(buildingId) : null;
-            string name = definition != null ? Loc.T(definition.nameKey) : buildingId;
-            ToastView.Show(string.Format(Loc.T("cq.done"), name, level));
+            ToastView.Show(ConstructionDoneText(buildingId, level));
         }
 
         private void OnAvatarClicked()

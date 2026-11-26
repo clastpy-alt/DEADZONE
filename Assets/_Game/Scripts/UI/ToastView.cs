@@ -10,7 +10,7 @@ namespace Deadzone.UI
 
         [SerializeField] private CanvasGroup group;
         [SerializeField] private TMP_Text label;
-        [SerializeField] private float visibleSeconds = 1.8f;
+        [SerializeField] private float visibleSeconds = 2.6f;
 
         private float timer;
 

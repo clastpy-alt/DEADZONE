@@ -35,7 +35,10 @@ namespace Deadzone.SaveSystem
         /// <summary>Highest clock value ever observed; protects against setting the device clock backwards.</summary>
         public long lastSeenUtc;
 
-        public static PlayerData CreateNew(GameConfig config)
+        public static PlayerData CreateNew(GameConfig config) => CreateNew(config, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+
+        /// <summary>'nowUtc' comes from the game clock so a new save and the production anchors share one time source.</summary>
+        public static PlayerData CreateNew(GameConfig config, long nowUtc)
         {
             var data = new PlayerData
             {
@@ -50,10 +53,9 @@ namespace Deadzone.SaveSystem
                 data.resources.Add(new ResourceAmount { type = start.type, amount = Math.Max(0, start.amount) });
             }
 
-            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            AddStartingBuildings(data, config.startingBuildings, now);
-            data.lastLoginUtc = now;
-            data.lastSeenUtc = now;
+            AddStartingBuildings(data, config.startingBuildings, nowUtc);
+            data.lastLoginUtc = nowUtc;
+            data.lastSeenUtc = nowUtc;
             return data;
         }
 

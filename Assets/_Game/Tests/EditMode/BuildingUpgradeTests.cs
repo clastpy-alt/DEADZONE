@@ -344,5 +344,52 @@ namespace Deadzone.Tests
             Assert.AreEqual(4, world.Buildings.GetLevel(TestWorld.Hq));
             Assert.IsFalse(world.Upgrades.ApplySpeedup(TestWorld.Hq, 10), "no job left");
         }
+
+        // ---------------------------------------------------------------- Storage vs. cost (PHASE 02.5)
+
+        [Test]
+        public void StorageTooSmall_BlocksUpgradeWhoseCostExceedsCapacity_UntilWarehouseRaisesIt()
+        {
+            world.Cleanup();
+            world = TestWorld.Create(capacity: 150);
+            world.SetLevel(TestWorld.Hq, 5);
+            world.SetLevel(TestWorld.Farm, 3); // next cost: 196 Food > capacity 150
+
+            UpgradeCheck check = world.Upgrades.CheckUpgrade(TestWorld.Farm);
+            Assert.AreEqual(UpgradeBlockReason.StorageTooSmall, check.reason);
+            Assert.AreEqual(1, check.storageShort.Count);
+            Assert.AreEqual(UpgradeBlockReason.StorageTooSmall, world.Upgrades.TryStartUpgrade(TestWorld.Farm));
+            Assert.AreEqual(10_000, world.Get(ResourceType.Food), "nothing is charged");
+
+            world.Cleanup();
+            world = TestWorld.Create(withWarehouse: true, capacity: 150);
+            world.SetLevel(TestWorld.Hq, 5);
+            world.SetLevel(TestWorld.Farm, 3);
+            Assert.AreEqual(UpgradeBlockReason.None, world.Upgrades.CheckUpgrade(TestWorld.Farm).reason);
+        }
+
+        [Test]
+        public void StorageTooSmall_IsReportedAfterRequirements()
+        {
+            world.Cleanup();
+            world = TestWorld.Create(capacity: 150);
+            world.SetLevel(TestWorld.Farm, 3); // HQ stays level 1: requirement first
+            Assert.AreEqual(UpgradeBlockReason.RequirementNotMet, world.Upgrades.CheckUpgrade(TestWorld.Farm).reason);
+        }
+
+        [Test]
+        public void ShippedWarehouse_KeepsItsOwnUpgradesPayableAtEveryLevel()
+        {
+            BuildingDatabase database = BuildingDatabase.Load();
+            BuildingDefinition warehouse = database.definitions.Find(d => d.type == BuildingType.Warehouse);
+            Assert.IsTrue(warehouse.IsFunctional);
+            long baseCapacity = UnityEngine.ScriptableObject.CreateInstance<Deadzone.Data.GameConfig>().defaultResourceCapacity;
+            for (int level = 2; level <= warehouse.maxLevel; level++)
+            {
+                long capacity = baseCapacity + warehouse.GetLevel(level - 1).storageCapacity;
+                foreach (var cost in warehouse.GetLevel(level).upgradeCost)
+                    Assert.LessOrEqual(cost.amount, capacity, "warehouse level " + level + " " + cost.type);
+            }
+        }
     }
 }

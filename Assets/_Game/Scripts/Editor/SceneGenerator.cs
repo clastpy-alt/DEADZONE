@@ -142,6 +142,7 @@ namespace Deadzone.EditorTools
             PlaceBuilding(buildings, "ResearchLab", new Vector3(10, 0, 4));
             PlaceBuilding(buildings, "FoodFarm", new Vector3(-14, 0, 17));
             PlaceBuilding(buildings, "SteelFactory", new Vector3(10, 0, -12));
+            PlaceBuilding(buildings, "Warehouse", Phase025Setup.WarehousePosition);
 
             BuildHud();
             CreateOverlay();

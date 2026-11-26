@@ -13,7 +13,7 @@ namespace Deadzone.Tests
         private static readonly BuildingType[] FunctionalTypes =
         {
             BuildingType.Headquarters, BuildingType.Barracks, BuildingType.MilitaryHospital,
-            BuildingType.ResearchLaboratory, BuildingType.FoodFarm, BuildingType.SteelFactory
+            BuildingType.ResearchLaboratory, BuildingType.FoodFarm, BuildingType.SteelFactory, BuildingType.Warehouse
         };
 
         private BuildingDatabase database;
@@ -42,7 +42,7 @@ namespace Deadzone.Tests
         }
 
         [Test]
-        public void ShippedDatabase_OnlySixBuildingsAreFunctional()
+        public void ShippedDatabase_OnlySevenBuildingsAreFunctional()
         {
             foreach (BuildingDefinition definition in database.definitions)
             {

@@ -145,7 +145,9 @@ namespace Deadzone.EditorTools
             BuildingPrefabGenerator.GenerateAll(false);
             Phase02Setup.GenerateBuildingData();
             UIPrefabGenerator.GenerateAll(false);
+            Debug.Log("[DEADZONE] Warehouse data: " + Phase025Setup.PatchWarehouseData());
             Debug.Log("[DEADZONE] Base scene: " + BuildingUiTools.PatchBaseScene());
+            Debug.Log("[DEADZONE] Warehouse scene: " + Phase025Setup.PatchWarehouseScene());
             Debug.Log("[DEADZONE] Military base: " + MilitaryBaseGenerator.Generate());
             AssetDatabase.SaveAssets();
 

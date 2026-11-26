@@ -91,6 +91,8 @@ namespace Deadzone.Core
             { "cq.remaining", new[] { "Kalan", "Remaining" } },
             { "cq.target", new[] { "Hedef", "Target" } },
             { "cq.slots", new[] { "Kuyruk", "Queue" } },
+            { "cq.done.many", new[] { "{0} inşaat tamamlandı!", "{0} constructions completed!" } },
+            { "up.err.storage", new[] { "Depo kapasitesi yetersiz: Depoyu geliştir", "Storage too small: upgrade the Warehouse" } },
             { "cq.done", new[] { "{0} Seviye {1} tamamlandı!", "{0} reached level {1}!" } },
             { "cq.cancel.confirm", new[] { "İnşaat iptal edilsin mi? Maliyetin %{0} kadarı iade edilir.", "Cancel construction? {0}% of the cost is refunded." } },
             { "cq.speedup.confirm", new[] { "{0} elmas karşılığında hemen tamamlansın mı?", "Finish now for {0} diamonds?" } },

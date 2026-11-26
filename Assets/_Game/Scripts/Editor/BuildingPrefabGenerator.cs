@@ -25,7 +25,8 @@ namespace Deadzone.EditorTools
             new Spec { Id = "hospital", NameKey = "building.hospital", FileName = "Hospital", Width = 5f, Height = 3f, Depth = 5f, ColorHex = "#8A9199" },
             new Spec { Id = "research_lab", NameKey = "building.lab", FileName = "ResearchLab", Width = 5f, Height = 3.4f, Depth = 5f, ColorHex = "#4E5E6E" },
             new Spec { Id = "food_farm", NameKey = "building.farm", FileName = "FoodFarm", Width = 6f, Height = 2f, Depth = 4.5f, ColorHex = "#6B5B3E" },
-            new Spec { Id = "steel_factory", NameKey = "building.steel", FileName = "SteelFactory", Width = 6f, Height = 3f, Depth = 5f, ColorHex = "#5A5F66" }
+            new Spec { Id = "steel_factory", NameKey = "building.steel", FileName = "SteelFactory", Width = 6f, Height = 3f, Depth = 5f, ColorHex = "#5A5F66" },
+            new Spec { Id = "warehouse", NameKey = "building.warehouse", FileName = "Warehouse", Width = 6f, Height = 2.4f, Depth = 4.5f, ColorHex = "#59626B" }
         };
 
         public static string PrefabPath(Spec spec) => EditorPaths.PrefabsBuildings + "/" + spec.FileName + ".prefab";
@@ -92,6 +93,11 @@ namespace Deadzone.EditorTools
                 case "steel_factory":
                     ModelBuilder.Prim(PrimitiveType.Cylinder, "Chimney1", t, new Vector3(-1.8f, roofY + 2.2f, 1.2f), new Vector3(0.9f, 2.2f, 0.9f), trim);
                     ModelBuilder.Prim(PrimitiveType.Cylinder, "Chimney2", t, new Vector3(0.2f, roofY + 2.2f, 1.2f), new Vector3(0.9f, 2.2f, 0.9f), trim);
+                    break;
+                case "warehouse":
+                    ModelBuilder.Prim(PrimitiveType.Cube, "Container1", t, new Vector3(-1.6f, roofY + 0.6f, 0.4f), new Vector3(2.4f, 1.2f, 1.2f), MaterialLibrary.Get("ContainerRust", "#7A4B3A"));
+                    ModelBuilder.Prim(PrimitiveType.Cube, "Container2", t, new Vector3(1.0f, roofY + 0.6f, -0.3f), new Vector3(2.4f, 1.2f, 1.2f), MaterialLibrary.Get("ContainerGreen", "#3F5A44"));
+                    ModelBuilder.Prim(PrimitiveType.Cylinder, "WaterTank", t, new Vector3(w / 2f + 1.3f, 1.2f, 0), new Vector3(1.8f, 1.2f, 1.8f), metal);
                     break;
                 case "barracks":
                     ModelBuilder.Prim(PrimitiveType.Cube, "RoofRidge", t, new Vector3(0, roofY + 0.15f, 0), new Vector3(w * 0.9f, 0.3f, 0.5f), trim);

@@ -1,19 +1,18 @@
 # NEXT_TASK — Sıradaki görev
 
-Güncelleme: 2026-11-26 · Faz: PHASE 02 tamamlandı (v0.2.0) · **PHASE 03'e kullanıcı komutu olmadan GEÇİLMEZ.**
+Güncelleme: 2026-11-26 · Faz: PHASE 02.5 devam ediyor (Grup 1 / 02.50 tamam, v0.2.5 hedefi) · **PHASE 03'e kullanıcı komutu olmadan GEÇİLMEZ.**
 
 Yeni oturumda sırayla oku: CLAUDE.md → bu dosya → TASK_STATUS.md → DEVELOPMENT_LOG.md (Oturum 4). Projeyi baştan analiz etme.
 
 ## Durum
-- Derleme 0 hata; EditMode 105/105; Play'de bina/ekonomi/yükseltme/kuyruk akışı doğrulandı (bkz. TASK_STATUS.md).
+- Derleme 0 hata; EditMode 108/108, PlayMode 9/9; Play'de bina/ekonomi/yükseltme/kuyruk akışı doğrulandı (bkz. TASK_STATUS.md).
 - Git: GitHub Desktop ile commit/push (commit mesajı sonuna Co-Authored-By ve Claude-Session satırları).
 
-## Faz 02 küçük açık işler (istenirse, PHASE 03'ten ÖNCE)
-1. B-005: çevrimdışı biten inşaat toast'ı — `HudController` abone olduktan sonra bekleyen tamamlanmaları göster (ör. `Game` tamamlananları listede tutup HUD açılışında tüketsin).
-2. Otomatik PlayMode testi: Base sahnesi yüklenir → HUD + kamera var → bina seç → yükselt → kayıt döngüsü.
-3. B-009 denge: Depo binasını işlevsel yap veya maliyet eğrisini yumuşat (ECONOMY_BALANCE.md §8).
-4. Safe Area / dokunma / performans: gerçek cihaz (veya Device Simulator) denemesi.
-5. Yeni Oyun (test kaydında) ile başlangıç ekonomisini UI'da gör; EN dil kontrolü.
+## PHASE 02.5 sıradaki işler (kullanıcının PHASE 02.5 isteminden)
+1. 02.51 PERFORMANCE_BUDGET.md + CLAUDE.md/MASTER_PROMPT.md/GAME_DESIGN.md kalıcı kuralları → commit.
+2. 02.52 ART_DIRECTION.md; 02.53 BLENDER_PIPELINE.md (Blender yok; kurulum için kullanıcı izni gerekir).
+3. 02.54+ HQ modeli önce (Unity'de doğrula), sonra diğer binalar; kademe sistemi; ortam; materyaller; ışık/profiller; kamera; HUD; bina UI (dünya etiketlerini küçük rozet yap); grafik ayarları; menü araçları; QA (8 ekran görüntüsü 1080x1920); dokümanlar.
+4. Açık: B-008 toast görsel doğrulaması; Safe Area ve gerçek cihaz/Android FPS ölçümü (ölçülmeden başarı raporlanmaz).
 
 ## PHASE 03 (yalnız kullanıcı onayıyla): bkz. MASTER_PROMPT.md yol haritası
 Planlı 16 bina için sırayla işlev eklerken `BuildingDefinition.availability = Functional` yap, `FeatureRouter`/UI kilidini kaldır, `PlayerPower.Register` ile araştırma/kahraman/birlik güçlerini bağla.

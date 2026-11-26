@@ -169,3 +169,17 @@ Bkz. BUG_TRACKER.md (B-005…B-012) ve ECONOMY_BALANCE.md §7–8: çevrimdış�
 
 ### Sonraki
 PHASE 03'e yalnızca kullanıcı komutuyla geçilir (NEXT_TASK.md).
+
+
+## Oturum 5 — PHASE 02.5, Grup 1: Hata düzeltmeleri (02.50)
+### Yapılanlar
+- Çevrimdışı biten inşaat bildirimi (`Game.OfflineCompletions`, HUD toast), Topla/İptal toast süresi 2.6 sn.
+- Depo işlevsel (veri + GameConfig başlangıç binası + sahne yerleşimi); `StorageTooSmall` yükseltme nedeni ve UI mesajı; Validate Economy depolama ilerlemesi.
+- Test altyapısı: `Game.ResetForTests`, `Game.SaveDirectoryOverride`; 9 PlayMode testi.
+- PlayMode testinin bulduğu gerçek hatalar: (1) `BuildingSelectionController` hiçbir sahnede yoktu → statik izleme `GameEvents.RaiseBuildingSelected` içinde; (2) yeni kayıt gerçek sistem saatini kullanıyordu → `SaveService.Clock`, `PlayerData.CreateNew(config, nowUtc)`.
+- Test düzeltmesi (gevşetme değil): çevrimdışı üretim testi artık min(8 saat sınırı, bina tamponu) bekler — tampon (4000) 8 saatlik üretimden (9600) önce devreye giriyor; bu davranış tasarıma uygun.
+- Sabit "6 bina" beklentileri dinamik/7 yapıldı (daha sıkı).
+### Doğrulama (ölçüldü)
+Derleme 0 hata/0 uyarı; Setup Phase 02 → Depo sahneye yerleşti, Validate Buildings/Economy/Save Migration OK; EditMode 108/108; PlayMode 9/9; Play'de seçim + Kapat doğrulandı.
+### Açık
+B-008 (toast'ın elle görsel doğrulaması), Safe Area cihaz testi. Blender bu makinede tespit edilemedi (02.53). Gerçek cihaz FPS ölçümü yapılmadı.

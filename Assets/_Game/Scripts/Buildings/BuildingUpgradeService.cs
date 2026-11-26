@@ -9,7 +9,9 @@ namespace Deadzone.Buildings
 {
     public enum UpgradeBlockReason
     {
-        None = 0, UnknownBuilding, NotAvailable, NotBuilt, MaxLevel, AlreadyUpgrading, QueueFull, RequirementNotMet, InsufficientResources
+        None = 0, UnknownBuilding, NotAvailable, NotBuilt, MaxLevel, AlreadyUpgrading, QueueFull, RequirementNotMet, InsufficientResources,
+        /// <summary>A cost line is larger than the wallet can ever hold: it could never be paid. Fix: upgrade the Warehouse.</summary>
+        StorageTooSmall
     }
 
     /// <summary>Result of CheckUpgrade: why it is blocked, and exactly what is missing.</summary>
@@ -19,6 +21,8 @@ namespace Deadzone.Buildings
         public BuildingLevelData target;
         public readonly List<BuildingRequirement> unmetRequirements = new List<BuildingRequirement>();
         public readonly List<ResourceAmount> missingResources = new List<ResourceAmount>();
+        /// <summary>Cost lines that exceed the current wallet capacity of their resource.</summary>
+        public readonly List<ResourceAmount> storageShort = new List<ResourceAmount>();
         public bool CanUpgrade => reason == UpgradeBlockReason.None;
     }
 
@@ -95,11 +99,13 @@ namespace Deadzone.Buildings
             {
                 long missing = cost.amount - wallet.Get(cost.type);
                 if (missing > 0) check.missingResources.Add(new ResourceAmount { type = cost.type, amount = missing });
+                if (cost.amount > wallet.GetCapacity(cost.type)) check.storageShort.Add(new ResourceAmount { type = cost.type, amount = cost.amount });
             }
 
             if (GetJob(buildingId) != null) check.reason = UpgradeBlockReason.AlreadyUpgrading;
             else if (data.constructionQueue.Count >= QueueSlots) check.reason = UpgradeBlockReason.QueueFull;
             else if (check.unmetRequirements.Count > 0) check.reason = UpgradeBlockReason.RequirementNotMet;
+            else if (check.storageShort.Count > 0) check.reason = UpgradeBlockReason.StorageTooSmall;
             else if (check.missingResources.Count > 0) check.reason = UpgradeBlockReason.InsufficientResources;
             return check;
         }

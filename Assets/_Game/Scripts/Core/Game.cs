@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Deadzone.Buildings;
 using Deadzone.Data;
@@ -28,6 +29,29 @@ namespace Deadzone.Core
         public static GameState State { get; private set; } = GameState.Booting;
         public static SaveService.LoadOutcome LastLoadOutcome { get; private set; }
 
+        /// <summary>Tests and tools can redirect the save folder (never set in a shipping flow). Null = Application.persistentDataPath/saves.</summary>
+        public static string SaveDirectoryOverride { get; set; }
+        /// <summary>How many constructions finished while the game was closed (set during start-up, for diagnostics and the welcome-back toast).</summary>
+        public static int LastOfflineCompletionCount { get; private set; }
+
+        private static readonly System.Collections.Generic.List<KeyValuePair<string, int>> OfflineCompletions = new System.Collections.Generic.List<KeyValuePair<string, int>>();
+
+        /// <summary>Returns the constructions that finished while the game was closed and forgets them (called once by the HUD).</summary>
+        public static System.Collections.Generic.List<KeyValuePair<string, int>> ConsumeOfflineCompletions()
+        {
+            var copy = new System.Collections.Generic.List<KeyValuePair<string, int>>(OfflineCompletions);
+            OfflineCompletions.Clear();
+            return copy;
+        }
+
+        /// <summary>Test hook: forgets all runtime state so the next EnsureInitialized() loads from 'saveDirectory' with 'clock'.</summary>
+        public static void ResetForTests(string saveDirectory, IGameClock clock)
+        {
+            ResetStatics();
+            SaveDirectoryOverride = saveDirectory;
+            if (clock != null) Clock = clock;
+        }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
         {
@@ -43,6 +67,9 @@ namespace Deadzone.Core
             State = GameState.Booting;
             PlayerPower.ClearSources();
             GameEvents.ClearAll();
+            SaveDirectoryOverride = null;
+            LastOfflineCompletionCount = 0;
+            OfflineCompletions.Clear();
         }
 
         public static void EnsureInitialized()
@@ -53,13 +80,21 @@ namespace Deadzone.Core
             BuildingDb = BuildingDatabase.Load();
             Application.targetFrameRate = Config.targetFrameRate;
 
-            Saves = new SaveService(Path.Combine(Application.persistentDataPath, "saves"));
+            Saves = new SaveService(string.IsNullOrEmpty(SaveDirectoryOverride) ? Path.Combine(Application.persistentDataPath, "saves") : SaveDirectoryOverride) { Clock = Clock };
             SaveService.LoadResult result = Saves.Load(Config);
             LastLoadOutcome = result.Outcome;
             Bind(result.Data);
 
+            // Buildings that became part of the starting base after this save was created are added once (existing ones are never touched).
+            PlayerData.AddStartingBuildings(Player, Config.startingBuildings, Buildings.Now());
+
             // Offline catch-up: finish constructions and credit capped production exactly once, then record the login.
-            Upgrades.CompleteFinished();
+            // The HUD does not exist yet, so the completions are remembered and shown by the HUD when it starts.
+            OfflineCompletions.Clear();
+            void Remember(string buildingId, int level) => OfflineCompletions.Add(new KeyValuePair<string, int>(buildingId, level));
+            GameEvents.ConstructionCompleted += Remember;
+            try { LastOfflineCompletionCount = Upgrades.CompleteFinished(); }
+            finally { GameEvents.ConstructionCompleted -= Remember; }
             Buildings.AccrueAll();
             Buildings.RecalculatePower();
             Player.lastLoginUtc = Buildings.Now();
@@ -100,7 +135,7 @@ namespace Deadzone.Core
         {
             EnsureInitialized();
             Saves.DeleteAll();
-            Bind(PlayerData.CreateNew(Config));
+            Bind(PlayerData.CreateNew(Config, Clock.UtcNowSeconds));
             Save(false);
 
             Buildings.RecalculatePower();

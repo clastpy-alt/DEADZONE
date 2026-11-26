@@ -45,6 +45,8 @@ MonoBehaviour:
     level: 1
   - buildingId: steel_factory
     level: 1
+  - buildingId: warehouse
+    level: 1
   maxOfflineHours: 8
   constructionQueueSlots: 1
   cancelRefundPercent: 80

@@ -19,7 +19,12 @@ namespace Deadzone.Core
         public static event Action PowerChanged;
 
         public static void RaiseResourceChanged(ResourceType type, long amount) => ResourceChanged?.Invoke(type, amount);
-        public static void RaiseBuildingSelected(BuildingSelectable building) => BuildingSelected?.Invoke(building);
+        public static void RaiseBuildingSelected(BuildingSelectable building)
+        {
+            // Selection state lives in a static so it works without a scene component (the close button relies on it).
+            BuildingSelectionController.Track(building);
+            BuildingSelected?.Invoke(building);
+        }
         public static void RaiseGameStateChanged(GameState oldState, GameState newState) => GameStateChanged?.Invoke(oldState, newState);
         public static void RaisePlayerProfileChanged() => PlayerProfileChanged?.Invoke();
         public static void RaiseGameSaved(bool manual) => GameSaved?.Invoke(manual);
@@ -42,6 +47,7 @@ namespace Deadzone.Core
             ConstructionChanged = null;
             ConstructionCompleted = null;
             PowerChanged = null;
+            BuildingSelectionController.Track(null);
         }
     }
 }

@@ -268,7 +268,7 @@ namespace Deadzone.Tests
                 Assert.AreEqual(1000, Amount(ResourceType.Gold));
                 Assert.AreEqual(200, Amount(ResourceType.Diamonds));
                 Assert.AreEqual(100, Amount(ResourceType.Energy));
-                Assert.AreEqual(6, data.buildings.Count);
+                Assert.AreEqual(GameConfig.DefaultStartingBuildings().Count, data.buildings.Count);
             }
             finally { UnityEngine.Object.DestroyImmediate(config); }
         }

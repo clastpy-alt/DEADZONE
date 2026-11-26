@@ -275,6 +275,7 @@ namespace Deadzone.UI
                 case UpgradeBlockReason.QueueFull: return "up.err.queue";
                 case UpgradeBlockReason.RequirementNotMet: return "up.err.req";
                 case UpgradeBlockReason.InsufficientResources: return "up.err.res";
+                case UpgradeBlockReason.StorageTooSmall: return "up.err.storage";
                 default: return "up.err.unknown";
             }
         }

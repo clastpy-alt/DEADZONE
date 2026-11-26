@@ -46,7 +46,8 @@ namespace Deadzone.Data
                 new StartingBuilding("hospital", 1),
                 new StartingBuilding("research_lab", 1),
                 new StartingBuilding("food_farm", 1),
-                new StartingBuilding("steel_factory", 1)
+                new StartingBuilding("steel_factory", 1),
+                new StartingBuilding("warehouse", 1)
             };
         }
 

@@ -1,13 +1,13 @@
 # TASK_STATUS  (PENDING · IN_PROGRESS · TEST_REQUIRED · COMPLETED · BLOCKED)
-Aktif faz: PHASE 02 (Askerî Üs ve Ekonomi, v0.2.0) — kod, testler ve Unity doğrulaması tamam; kullanıcı onayı bekleniyor · PHASE 03'e kullanıcı komutu olmadan geçilmez
+Aktif faz: PHASE 02.5 (Profesyonel Grafik Yenileme, v0.2.5) — grup 1 (02.50 hata düzeltmeleri) tamam; 02.51 ve sonrası sırada · PHASE 03'e kullanıcı komutu olmadan geçilmez
 Son güncelleme: 2026-11-26
 
-Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 0 hata. **EditMode: 105/105 geçti** (eski 39 + yeni 66; hiçbir test silinmedi/devre dışı bırakılmadı). Console: 0 hata/0 uyarı (Play).
+Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 0 hata. **EditMode: 108/108, PlayMode: 9/9 geçti** (ölçüldü, Test Runner, 2026-11-26; hiçbir test silinmedi/devre dışı bırakılmadı). Console: 0 hata/0 uyarı.
 
 ## PHASE 02 görevleri
 - COMPLETED      02.00 Cila: bilgi sayfası yerleşimi, toast konumu, kamera yakınlığı, TMP taşma
 - COMPLETED      02.01 Veri tabanlı bina sistemi (BuildingDefinition/Database/Instance, azami seviye 35); Validate Buildings temiz; BuildingDataTests 10 test
-- COMPLETED      02.02 22 bina türü veri olarak; yalnız HQ, Kışla, Hastane, Araştırma Lab., Gıda Çiftliği, Çelik Fabrikası işlevsel (diğerleri Planned, UI'da kilitli)
+- COMPLETED      02.02 22 bina türü veri olarak; HQ, Kışla, Hastane, Araştırma Lab., Gıda Çiftliği, Çelik Fabrikası ve (02.5) Depo işlevsel (diğerleri Planned, UI'da kilitli)
 - COMPLETED      02.03 Askerî üs ortamı: yer tutucu props (pist, varil, çit, jeneratör, radar, çalı) + bina detayları; ASSET_REGISTER.md notu. TEST_REQUIRED: gerçek cihaz performansı
 - COMPLETED      02.04 Bina bilgi sayfası (mevcut/sonraki seviye, maliyet, süre, gereksinim, neden, Topla/Bilgi/Geliştir)
 - COMPLETED      02.05 Ekonomi: üretim, Topla, kapasite (bina deposu + Depo bonusu), çevrimdışı 8 saat sınırı, negatif bakiye yok
@@ -17,18 +17,24 @@ Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 
 - COMPLETED      02.09 Save V2 + v1→v2 kayıpsız göç (testli); kayıt/yedek asla silinmez
 - COMPLETED      02.10 PlayerPower (bina + IPowerSource kancaları); HUD güç göstergesi
 - COMPLETED      02.11 Editor otomasyonu (Tools > DEADZONE: Setup Phase 02, Generate Building Database/Level Data/Military Base/Building UI, Validate Buildings/Economy/Save Migration); yeniden çalıştırma kopya üretmez
-- COMPLETED      02.12 Testler: 105/105 EditMode. Otomatik PlayMode testi YAZILMADI (PENDING)
-- COMPLETED      02.13 Dokümanlar güncellendi; commit/push (aşağıda hash)
+- COMPLETED      02.12 Testler: 105/105 EditMode. PlayMode testi 02.5'te eklendi
+- COMPLETED      02.13 Dokümanlar güncellendi; commit/push (commit a195753 "PHASE 02: askeri us ve ekonomi sistemi (v0.2.0)", GitHub clastpy-alt/DEADZONE main)
+
+## PHASE 02.5 görevleri
+- COMPLETED      02.50 Hata düzeltmeleri: çevrimdışı inşaat toast'ı (B-005), Depo işlevsel + `StorageTooSmall` (B-009), Collect/Cancel toast süresi, TMP uyarısı yok, 9 PlayMode testi, `Game.ResetForTests`, seçim durumu hatası (B-013), tek zaman kaynağı (B-014). Cihaz saati manipülasyonu ECONOMY_BALANCE.md §7'de belgeli; sunucu zamanı multiplayer fazına bırakıldı.
+- PENDING        02.51 PERFORMANCE_BUDGET.md + kalıcı kurallar
+- PENDING        02.52 ART_DIRECTION.md
+- PENDING        02.53 Blender kontrolü (Blender TESPİT EDİLMEDİ; kurulum kullanıcı iznine bağlı) + BLENDER_PIPELINE.md
+- PENDING        02.54–02.65 modeller, bina kademeleri, ortam, materyaller, ışık, kamera, HUD, bina UI, grafik ayarları, menü araçları, QA, dokümanlar
+- TEST_REQUIRED  Gerçek cihaz/Android build FPS ve bellek ölçümleri — ölçülmedi; hiçbir performans hedefi karşılandı olarak raporlanmaz
 
 ## Unity'de elle doğrulananlar (Play, Portrait 1080x1920 Game görünümü)
 Bina seçimi + bilgi sayfası, yükseltme (maliyet düşer/ilerleme/tamamlanma, güç artar), HQ gereksinimi uyarısı, Bilgi penceresi, İnşaat penceresi, İptal (onay+iade), Hızlandır (onay, 1 Elmas, seviye arttı), Topla (cüzdan arttı), kayıt kalıcılığı.
 
 ## Doğrulanmayanlar / açık (bkz. BUG_TRACKER.md)
-- PENDING        Otomatik PlayMode testi
-- TEST_REQUIRED  Çevrimdışı tamamlanma toast'ı (B-005), Topla/İptal toast'ları ekran görüntüsünde yakalanamadı (B-008)
+- TEST_REQUIRED  Topla/İptal toast'ları ekran görüntüsünde elle doğrulanmadı (B-008)
 - TEST_REQUIRED  Safe Area gerçek çentikli cihazda; dokunma hissi/performans
 - TEST_REQUIRED  EN dil, Yeni Oyun onayı (kullanıcının kaydı silinmesin diye denenmedi), UIGallery
-- PENDING        Denge: ~L18 üstü maliyet > kapasite (Depo işlevsel değil) — B-009
 
 ## Önemli tasarım kararları (tekrar sorgulamadan devam et)
 - Statik oyun verisi = ScriptableObject (GameConfig, BuildingDefinition/Database), oyuncu verisi = PlayerData (JSON, v2). Kaynaklar yalnız `ResourceWallet` ile değişir.

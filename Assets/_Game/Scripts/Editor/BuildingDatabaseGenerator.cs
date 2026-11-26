@@ -24,6 +24,7 @@ namespace Deadzone.EditorTools
             public long Power = 40;
             public ResourceType? Produces;
             public long Production, Storage;
+            public float StorageGrowth = 1.2f;
             public bool GlobalStorage;
             public (ResourceType type, long amount)[] Cost = { (ResourceType.Food, 300), (ResourceType.Wood, 300), (ResourceType.Steel, 200) };
         }
@@ -64,7 +65,7 @@ namespace Deadzone.EditorTools
             new Seed { Id = "power_plant", FileName = "PowerPlant", NameKey = "building.power_plant", DescKey = "building.power_plant.desc", Label = "PW", Color = "#3E6A8A",
                 Type = BuildingType.PowerPlant, Category = BuildingCategory.Economy, UnlockHq = 2, Power = 30, Produces = ResourceType.Energy, Production = 10, Storage = 100 },
             new Seed { Id = "warehouse", FileName = "Warehouse", NameKey = "building.warehouse", DescKey = "building.warehouse.desc", Label = "WH", Color = "#59626B",
-                Type = BuildingType.Warehouse, Category = BuildingCategory.Economy, UnlockHq = 2, Power = 15, Storage = 5000, GlobalStorage = true },
+                Type = BuildingType.Warehouse, Category = BuildingCategory.Economy, Functional = true, PrefabFile = "Warehouse", UnlockHq = 2, Power = 15, Storage = 20000, StorageGrowth = 1.42f, GlobalStorage = true },
 
             new Seed { Id = "research_lab", FileName = "ResearchLab", NameKey = "building.lab", DescKey = "building.lab.desc", Label = "LB", Color = "#4E5E6E", PrefabFile = "ResearchLab",
                 Type = BuildingType.ResearchLaboratory, Category = BuildingCategory.Technology, Functional = true, Power = 60,
@@ -181,7 +182,7 @@ namespace Deadzone.EditorTools
                 storageIsGlobal = seed.GlobalStorage
             };
 
-            var curve = new BuildingBalanceCurve { powerBase = seed.Power, productionBase = seed.Production, storageBase = seed.Storage };
+            var curve = new BuildingBalanceCurve { powerBase = seed.Power, productionBase = seed.Production, storageBase = seed.Storage, storageGrowth = seed.StorageGrowth };
             var costs = new List<ResourceAmount>();
             foreach ((ResourceType type, long amount) cost in seed.Cost) costs.Add(new ResourceAmount { type = cost.type, amount = cost.amount });
             curve.baseCost = costs;

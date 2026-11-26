@@ -73,7 +73,7 @@ namespace Deadzone.Tests
             Assert.AreEqual(1234, loaded.resources.Find(r => r.type == ResourceType.Food).amount, "no resource is gained or lost");
             Assert.AreEqual(77, loaded.resources.Find(r => r.type == ResourceType.Gold).amount);
 
-            Assert.AreEqual(6, loaded.buildings.Count);
+            Assert.AreEqual(GameConfig.DefaultStartingBuildings().Count, loaded.buildings.Count);
             foreach (GameConfig.StartingBuilding start in GameConfig.DefaultStartingBuildings())
             {
                 BuildingInstanceData instance = loaded.buildings.Find(b => b.buildingId == start.buildingId);
@@ -107,7 +107,7 @@ namespace Deadzone.Tests
 
             StringAssert.Contains("\"version\":2", File.ReadAllText(service.MainPath));
             PlayerData again = new SaveService(directory).Load(config).Data;
-            Assert.AreEqual(6, again.buildings.Count, "no duplicate starting buildings after another round trip");
+            Assert.AreEqual(GameConfig.DefaultStartingBuildings().Count, again.buildings.Count, "no duplicate starting buildings after another round trip");
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Deadzone.Tests
             SaveMigration.Migrate(data, 1, 1_000);
             SaveMigration.Migrate(data, 1, 2_000);
 
-            Assert.AreEqual(6, data.buildings.Count);
+            Assert.AreEqual(GameConfig.DefaultStartingBuildings().Count, data.buildings.Count);
             BuildingInstanceData farm = data.buildings.Find(b => b.buildingId == "food_farm");
             Assert.AreEqual(7, farm.level);
             Assert.AreEqual(55, farm.storedAmount);

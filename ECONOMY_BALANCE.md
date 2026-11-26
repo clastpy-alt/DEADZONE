@@ -64,9 +64,10 @@ Tüm seviyelerin (L1→L35) toplam süresi ≈ 42 gün (tek yuva, tek bina).
 - Tüm zamanlar UTC unix saniyesidir ve tek kaynak `IGameClock`'tur (`SystemGameClock` = cihaz saati).
 - `BuildingManager.Now()` tarihte gördüğü en yüksek değerin (`lastSeenUtc`) altına inmez: **saati geri almak** inşaatı uzatmaz/kısaltmaz, üretim kazandırmaz (testli: `ClockRollback_*`, `Accrue_ClockRollback_*`).
 - **Saati ileri almak** çevrimdışı oyunda inşaatı hızlandırır ve üretimi (en fazla 8 saat/oturum) artırır. Cihaz saatine güvenen tek oyunculu prototipte bu engellenemez; bu bir hile koruması DEĞİLDİR. Kayıt checksum'ı da yalnız kazara bozulmayı yakalar.
+- PHASE 02.5 kararı: offline prototipte cihaz saati manipülasyonu tamamen engellenemez; sunucu zamanı entegrasyonu multiplayer aşamasına bırakıldı. Oyuncuya görünür hile korumasıymış gibi sunulmaz.
 - Çözüm yolu (Faz 08): `IGameClock`'a sunucu zamanı uygulaması takmak ve inşaat/üretimi sunucuda doğrulamak; oyun kodu değişmeden kalır.
 
 ## 8. Bilinen denge sorunları (Faz 02 sınırı)
-- Maliyetler 1.4× üstel büyür; HQ Çelik maliyeti ≈ L19'da 100.000 kapasiteyi aşar. Depo bina henüz işlevsel olmadığından (Planned) yaklaşık L18 üstü yükseltmeler **karşılanamaz**. Depo/kapasite veya eğri düzeltmesi sonraki fazda yapılmalı.
+- (ÇÖZÜLDÜ, 02.5) Depo işlevsel: depolama `20.000 × 1.42^(L−1)` (cüzdan kapasitesine eklenir). Bir maliyet toplam kapasiteyi aşarsa yükseltme `StorageTooSmall` nedeniyle engellenir ve arayüz "Depoyu geliştir" uyarısı verir. Validate Economy her kaynak için maliyetin ulaşılabilirliğini denetler.
 - Süre eğrisi (×1.25) çok uzundur (L35 ≈ 8,4 gün); hızlandırma öğeleri ve VIP yuvaları eklenince yeniden dengelenmeli.
 - Elmas hızlandırma oranı (1 elmas/dk) yer tutucudur; gerçek ekonomi ve satın alma Faz 06+.

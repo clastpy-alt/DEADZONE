@@ -5,21 +5,16 @@ namespace Deadzone.Buildings
 {
     /// <summary>
     /// Keeps track of which building is selected. The camera detects the tap and raises GameEvents.BuildingSelected;
-    /// this component owns the state (so UI can close the panel and clear the selection ring) and clears it on leaving the scene.
+    /// the state is kept in a static (set by GameEvents) so UI can close the panel and clear the selection ring.
     /// </summary>
     public sealed class BuildingSelectionController : MonoBehaviour
     {
         public static BuildingSelectable Current { get; private set; }
 
-        private void OnEnable() => GameEvents.BuildingSelected += OnSelected;
+        /// <summary>Called by GameEvents.RaiseBuildingSelected, so no scene component is needed.</summary>
+        internal static void Track(BuildingSelectable building) => Current = building;
 
-        private void OnDisable()
-        {
-            GameEvents.BuildingSelected -= OnSelected;
-            Current = null;
-        }
-
-        private static void OnSelected(BuildingSelectable building) => Current = building;
+        private void OnDisable() => Current = null;
 
         /// <summary>Clears the selection ring and tells the UI (panel hides).</summary>
         public static void Deselect()

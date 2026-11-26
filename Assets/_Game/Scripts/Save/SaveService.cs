@@ -43,6 +43,9 @@ namespace Deadzone.SaveSystem
 
         private readonly string directory;
 
+        /// <summary>Time source for new saves and migrations (the game sets its own clock; tests use a fake one).</summary>
+        public Deadzone.Buildings.IGameClock Clock { get; set; } = new Deadzone.Buildings.SystemGameClock();
+
         public SaveService(string directory)
         {
             this.directory = directory;
@@ -106,7 +109,7 @@ namespace Deadzone.SaveSystem
 
             return new LoadResult
             {
-                Data = PlayerData.CreateNew(config),
+                Data = PlayerData.CreateNew(config, Clock.UtcNowSeconds),
                 Outcome = anyFailed ? LoadOutcome.ResetAfterCorruption : LoadOutcome.CreatedNew
             };
         }
@@ -119,7 +122,7 @@ namespace Deadzone.SaveSystem
             }
         }
 
-        private static bool TryRead(string path, out PlayerData data, out string error)
+        private bool TryRead(string path, out PlayerData data, out string error)
         {
             data = null;
             error = null;
@@ -164,12 +167,12 @@ namespace Deadzone.SaveSystem
         }
 
         /// <summary>Upgrade data written by older versions (see SaveMigration).</summary>
-        private static void Migrate(PlayerData data, int fromVersion)
+        private void Migrate(PlayerData data, int fromVersion)
         {
-            SaveMigration.Migrate(data, fromVersion, System.DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            SaveMigration.Migrate(data, fromVersion, Clock.UtcNowSeconds);
         }
 
-        private static void Sanitize(PlayerData data)
+        private void Sanitize(PlayerData data)
         {
             if (string.IsNullOrEmpty(data.playerId)) data.playerId = Guid.NewGuid().ToString("N");
             if (string.IsNullOrWhiteSpace(data.playerName)) data.playerName = "Commander";
@@ -179,7 +182,7 @@ namespace Deadzone.SaveSystem
             if (data.combatPower < 0) data.combatPower = 0;
             if (data.resources == null) data.resources = new List<ResourceAmount>();
 
-            SaveMigration.Sanitize(data, System.DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            SaveMigration.Sanitize(data, Clock.UtcNowSeconds);
             data.resources.RemoveAll(r => r == null);
             foreach (ResourceAmount r in data.resources)
             {
