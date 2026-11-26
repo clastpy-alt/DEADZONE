@@ -11,6 +11,8 @@ namespace Deadzone.Tests
     /// </summary>
     public sealed class UiReferenceValidationTests
     {
+        private const string UiPrefabFolder = "Assets/_Game/Prefabs/UI";
+
         private static readonly string[] RequiredUiPrefabs =
         {
             "PrimaryButton", "SecondaryButton", "IconButton", "ResourceCounter", "PopupPanel", "ConfirmationDialog",
@@ -23,7 +25,7 @@ namespace Deadzone.Tests
         {
             foreach (string name in RequiredUiPrefabs)
             {
-                string path = EditorPaths.PrefabsUI + "/" + name + ".prefab";
+                string path = UiPrefabFolder + "/" + name + ".prefab";
                 Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(path), "Missing prefab: " + path + " (run Setup Phase 01)");
             }
         }
