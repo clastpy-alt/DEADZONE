@@ -183,3 +183,17 @@ PHASE 03'e yalnızca kullanıcı komutuyla geçilir (NEXT_TASK.md).
 Derleme 0 hata/0 uyarı; Setup Phase 02 → Depo sahneye yerleşti, Validate Buildings/Economy/Save Migration OK; EditMode 108/108; PlayMode 9/9; Play'de seçim + Kapat doğrulandı.
 ### Açık
 B-008 (toast'ın elle görsel doğrulaması), Safe Area cihaz testi. Blender bu makinede tespit edilemedi (02.53). Gerçek cihaz FPS ölçümü yapılmadı.
+
+
+## Oturum 5 — PHASE 02.5, Grup 3: Modeller, kademeler, materyaller (02.54 / 02.55 / 02.57)
+### Yapılanlar
+- Blender yok → `MilitaryModelGenerator` (+ `MilitaryModelBuildings.cs`) her bina prefab'ına `Mil_Visual` (Core + Tier1..Tier7) üretir; parçalar `MeshMerger` ile malzeme başına tek mesh'e birleştirilir (draw call/renderer azalır); eski primitifler SİLİNMEZ, devre dışı bırakılır; Foundation, SelectionRing, collider, `BuildingSelectable` değişmez.
+- Silüetler: HQ (kule + çanak + beacon), Kışla (uzun/alçak kademeli çatı), Hastane (merkez + kanatlar, kırmızı haç, helipad, ambulans), Araştırma Lab. (kubbe + reaktör), Çiftlik (ahır + 2 silo + yel değirmeni + tarla), Çelik Fabrikası (testere dişi çatı + 2 baca + fırın ışıltısı), Depo (beşik çatılı hangar + rampa + konteynerler).
+- `BuildingVisualTiers`: 7 eklemeli kademe (L1–5→1 … L31–35→7), seviye değişince/inşaat bitince güncellenir. Ortak kademe eklentileri: bariyer+ışık, kum torbası, çevre duvarı+kapı, güneş paneli+jeneratör, depo+haberleşme, zırh+taret, altın çerçeve+plaket.
+- 25 `Mil_*` materyal (`MilitaryMaterials`); menü: Generate Military Materials / Generate Military Models / Rebuild Military Models (Generated Parts Only) — idempotent.
+### Doğrulama (ölçüldü)
+Derleme 0 hata; EditMode 124/124 (108 + 16 yeni kademe testi); PlayMode 9/9; Scene'de 7 binanın tamamı görsel olarak incelendi (kademe 1 görünür); collider ve BuildingSelectable bilgileri aynı.
+### Açık / dürüst notlar
+- Kademe 2–7'nin Play'de görsel doğrulaması ve oyun içi (Game view, 1080x1920) ekran görüntüleri sonraki adımda.
+- Dikey kare/üçgen sayısı ve FPS ölçülmedi; LOD henüz yok (02.63 Generate LOD Models).
+- Modeller primitif birleşimidir; gerçek sanatçı modeli değildir (PHASE 09).

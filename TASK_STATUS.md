@@ -1,5 +1,5 @@
 # TASK_STATUS  (PENDING · IN_PROGRESS · TEST_REQUIRED · COMPLETED · BLOCKED)
-Aktif faz: PHASE 02.5 (Profesyonel Grafik Yenileme, v0.2.5) — grup 1 (02.50 hata düzeltmeleri) tamam; 02.51 ve sonrası sırada · PHASE 03'e kullanıcı komutu olmadan geçilmez
+Aktif faz: PHASE 02.5 (Profesyonel Grafik Yenileme, v0.2.5) — grup 1 (02.50), grup 2 (02.51–02.53 dokümanlar) ve grup 3 (02.54/02.55/02.57 modeller + katmanlar + materyaller) tamam; 02.56 ve sonrası sırada · PHASE 03'e kullanıcı komutu olmadan geçilmez
 Son güncelleme: 2026-11-26
 
 Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 0 hata. **EditMode: 108/108, PlayMode: 9/9 geçti** (ölçüldü, Test Runner, 2026-11-26; hiçbir test silinmedi/devre dışı bırakılmadı). Console: 0 hata/0 uyarı.
@@ -22,10 +22,13 @@ Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 
 
 ## PHASE 02.5 görevleri
 - COMPLETED      02.50 Hata düzeltmeleri: çevrimdışı inşaat toast'ı (B-005), Depo işlevsel + `StorageTooSmall` (B-009), Collect/Cancel toast süresi, TMP uyarısı yok, 9 PlayMode testi, `Game.ResetForTests`, seçim durumu hatası (B-013), tek zaman kaynağı (B-014). Cihaz saati manipülasyonu ECONOMY_BALANCE.md §7'de belgeli; sunucu zamanı multiplayer fazına bırakıldı.
-- PENDING        02.51 PERFORMANCE_BUDGET.md + kalıcı kurallar
-- PENDING        02.52 ART_DIRECTION.md
-- PENDING        02.53 Blender kontrolü (Blender TESPİT EDİLMEDİ; kurulum kullanıcı iznine bağlı) + BLENDER_PIPELINE.md
-- PENDING        02.54–02.65 modeller, bina kademeleri, ortam, materyaller, ışık, kamera, HUD, bina UI, grafik ayarları, menü araçları, QA, dokümanlar
+- COMPLETED      02.51 PERFORMANCE_BUDGET.md + kalıcı kurallar (CLAUDE.md/MASTER_PROMPT.md). Hedefler HEDEFTİR; gerçek cihaz/Android ölçümü yapılmadı
+- COMPLETED      02.52 ART_DIRECTION.md
+- COMPLETED      02.53 Blender kontrolü (TESPİT EDİLEMEDİ; kurulum kullanıcı iznine bağlı) + BLENDER_PIPELINE.md
+- COMPLETED      02.54 7 bina için ayrıntılı askeri model (Unity içinde primitif birleşimi, malzeme başına birleştirilmiş mesh); HQ + Kışla + Hastane + Lab + Çiftlik + Çelik Fabrikası + Depo; kimlik/seviye/collider/seçim korunur (Unity'de görsel doğrulandı)
+- COMPLETED      02.55 7 kademeli görsel sistem (`BuildingVisualTiers`, L1–5…L31–35, eklemeli). Kademe 1 Unity'de görüldü; kademe 2–7 yalnızca EditMode testle doğrulandı, Play'de görsel olarak HENÜZ görülmedi
+- COMPLETED      02.57 25 `Mil_*` URP/Lit materyal kütüphanesi (GPU instancing)
+- PENDING        02.56, 02.58–02.65 ortam, ışık/atmosfer + LOW/MEDIUM/HIGH, kamera, HUD, bina UI, grafik ayarları, kalan menü araçları, QA, dokümanlar
 - TEST_REQUIRED  Gerçek cihaz/Android build FPS ve bellek ölçümleri — ölçülmedi; hiçbir performans hedefi karşılandı olarak raporlanmaz
 
 ## Unity'de elle doğrulananlar (Play, Portrait 1080x1920 Game görünümü)

@@ -174,6 +174,31 @@ namespace Deadzone.EditorTools
             Debug.Log("[DEADZONE] Military base: " + MilitaryBaseGenerator.Generate());
         }
 
+        [MenuItem("Tools/DEADZONE/Generate Military Materials", priority = 49)]
+        private static void GenerateMilitaryMaterials()
+        {
+            int created = MilitaryMaterials.GenerateAll();
+            Debug.Log("[DEADZONE] Military materials: " + created + " new material(s) (existing ones were kept).");
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate Military Models", priority = 50)]
+        private static void GenerateMilitaryModels()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            BuildingPrefabGenerator.GenerateAll(false);
+            Debug.Log("[DEADZONE] Military models:\n" + MilitaryModelGenerator.Generate(false));
+        }
+
+        [MenuItem("Tools/DEADZONE/Rebuild Military Models (Generated Parts Only)", priority = 51)]
+        private static void RebuildMilitaryModels()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            if (!EditorUtility.DisplayDialog("Rebuild Military Models",
+                    "This deletes and regenerates ONLY the generated 'Mil_Visual' child of each building prefab. Manual edits inside Mil_Visual are lost. Continue?",
+                    "Rebuild", "Cancel")) return;
+            Debug.Log("[DEADZONE] Military models rebuilt:\n" + MilitaryModelGenerator.Generate(true));
+        }
+
         [MenuItem("Tools/DEADZONE/Validate Buildings", priority = 22)]
         private static void ValidateBuildings() => Phase02Validators.Report("Validate Buildings", Phase02Validators.ValidateBuildings(), true);
 
