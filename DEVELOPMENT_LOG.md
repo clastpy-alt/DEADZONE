@@ -1,0 +1,110 @@
+# DEVELOPMENT_LOG — DEADZONE: LAST EMPIRE
+
+Son güncelleme: 2026-11-26 · Aktif faz: PHASE 01.5 · Genel durum: **KOD YAZILDI, UNITY'DE HENÜZ DERLENMEDİ/TEST EDİLMEDİ**
+
+> Bir sonraki oturum: önce CLAUDE.md → NEXT_TASK.md → bu dosyanın "Oturum 1" ve "Oturum 2" bölümlerini oku. Projeyi baştan analiz etmek gerekmez; dosya envanteri ve mimari kararlar aşağıda.
+
+---
+
+## Oturum 1 — 2026-11-26 (PHASE 01 temel paketi)
+
+### Ortam (doğrulandı: Packages/manifest.json + ProjectSettings/ProjectVersion.txt okundu)
+- Unity **6000.6.10f1**, URP **17.6.0**, Input System **1.20.1**, uGUI **2.6.0** (TextMeshPro bu pakette), şablon: Universal 3D (SampleScene, Mobile_RPAsset/PC_RPAsset var).
+- **com.unity.test-framework manifest'te YOK** → kurulmadan testler derlenmez (test asmdef `UNITY_INCLUDE_TESTS` kısıtıyla korunuyor, projeyi bozmaz).
+- Unity proje kökü (iç içe): `C:\Users\Clast\OneDrive\Desktop\DEADZONE-LAST-EMPIRE\DEADZONE-LAST-EMPIRE`. Tüm dosyalar buraya yazıldı. Git burada başlatılmalı.
+- Yeni proje eski DEADZONE'dan bağımsız (eski: Downloads\DEADZONE-LAST-EMPIRE-Tek-Klasor) — eski dosyalara dokunulmadı.
+- Kod/dosyalar bilgisayara `device_commit_files` ile yazıldı; Unity Editor'e, C# derleyicisine ve bilgisayarda komut satırına erişim YOKTU.
+
+### Tamamlanan (YAZILDI — doğrulanmadı)
+Hiçbiri "COMPLETED" değildir; hepsi TEST_REQUIRED.
+- Mimari: 3 asmdef (Runtime, Editor, Tests.EditMode), klasör yapısı `Assets/_Game/...`
+- Core: Game (servis tutucu), GameRuntime (30 sn otomatik kayıt, pause/quit kaydı), GameEvents, GameState, SceneLoader/SceneNames, GameBootstrap, AudioService (klip yok), Loc (TR/EN, 40 anahtar)
+- Save: PlayerData, SaveService (versiyonlu JSON, SHA256, yedek, Migrate kancası, bozuk kayıt karantinası, tmp→main taşıma)
+- Economy: ResourceWallet (negatif/geçersiz miktar engeli, kapasite, Changed olayı)
+- Kamera: IsometricCameraController (fare sürükle, dokunma sürükle, pinch, tekerlek zoom, yumuşatma, XZ sınır, tıklayarak bina seçimi; yeni Input System)
+- UI runtime: HudController, ResourceCounterView, NavButton + FeatureRouter (yalnız "Base" açık, diğerleri kilitli), BuildingInfoPanel, ToastView, SafeAreaFitter, LocalizedText, MainMenuController, UIColors, NumberFormatter
+- Editor araçları (Tools > DEADZONE): Setup Phase 01, Validate Project, Generate UI, Generate Building Prefabs, Create Base Scene, Build Development APK
+- Üretilecek içerik (Setup sonrası oluşur): 5 sahne, 6 placeholder bina prefabı, 4 UI prefabı, URP materyalleri, GameConfig.asset, placeholder üs ortamı (duvar, yol, kule, ağaç, araç, konteyner, ev, enkaz)
+- EditMode testleri yazıldı (çalıştırılmadı): ResourceWalletTests (7), SaveServiceTests (6), UtilityTests (≈10 durum)
+- Dokümanlar + Git dosyaları: CLAUDE.md, MASTER_PROMPT.md (V3.0 tam metin), GAME_DESIGN, ARCHITECTURE, ROADMAP, TASK_STATUS, BUG_TRACKER, ECONOMY_BALANCE, UI_DESIGN_SYSTEM, ASSET_REGISTER, TEST_PLAN, KURULUM, NEXT_TASK, .gitignore, .gitattributes
+
+### Oluşturulan dosyalar (proje köküne göre)
+- Kök: `.gitignore`, `.gitattributes`, `CLAUDE.md`, `MASTER_PROMPT.md`, `GAME_DESIGN.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `DEVELOPMENT_LOG.md`, `TASK_STATUS.md`, `NEXT_TASK.md`, `BUG_TRACKER.md`, `ECONOMY_BALANCE.md`, `UI_DESIGN_SYSTEM.md`, `ASSET_REGISTER.md`, `TEST_PLAN.md`, `KURULUM.md`
+- `Assets/_Game/Scripts/Deadzone.Runtime.asmdef`
+- `Scripts/Core/`: AudioService, Game, GameBootstrap, GameEvents, GameRuntime, GameState, IsometricCameraController, Loc, SceneLoader, SceneNames
+- `Scripts/Data/`: GameConfig, Language, ResourceType · `Scripts/Save/`: PlayerData, SaveService · `Scripts/Economy/`: ResourceWallet · `Scripts/Buildings/`: BuildingSelectable
+- `Scripts/UI/`: BuildingInfoPanel, HudController, HudFeature (içinde FeatureRouter), LocalizedText, MainMenuController, NavButton, NumberFormatter, ResourceCounterView, SafeAreaFitter, ToastView, UIColors
+- `Scripts/Editor/`: Deadzone.Editor.asmdef, BuildTools, BuildingPrefabGenerator, DeadzoneMenu, EditorPaths, MaterialLibrary, ModelBuilder, PlaceholderModels, ProjectSetup, ProjectValidator, SceneGenerator, UIFactory, UIPrefabGenerator
+- `Tests/EditMode/`: Deadzone.Tests.EditMode.asmdef, ResourceWalletTests, SaveServiceTests, UtilityTests
+- Toplam 61 dosya. Mevcut proje dosyaları DEĞİŞTİRİLMEDİ. (Setup Phase 01 çalışınca ProjectSettings'te yön=Portrait ve ürün adı değişir, EditorBuildSettings'e sahneler eklenir.)
+
+### Test sonuçları
+- Unity derlemesi: **ÇALIŞTIRILMADI**
+- EditMode testleri: **ÇALIŞTIRILMADI**
+- Play Mode: **ÇALIŞTIRILMADI**
+- Yapılan tek kontrol (Unity dışı): tüm .cs dosyalarında {} () [] dengesi tamam; asmdef dosyaları geçerli JSON.
+
+### Mevcut hatalar / riskler (hiçbiri doğrulanmadı — Console çıktısı yok)
+1. Derleme hatası olasılığı: Unity 6.6 + uGUI 2.6 API farkları (özellikle `TMP_Settings.instance`, `InputSystemUIInputModule.AssignDefaultActions()`, `FindFirstObjectByType`, `Outline`/TMP türleri). İlk iş Console'a bakmak.
+2. Test Framework paketi yok → testler derlenmez/çalışmaz (beklenen).
+3. Türkçe karakterler (İ ş ğ ı) TMP varsayılan fontunda eksik görünebilir → font atlası/fallback gerekebilir.
+4. Proje OneDrive içinde: OneDrive `Library/` ve `Temp/` klasörlerini senkronlayıp kilit/yavaşlık sorunu çıkarabilir. Öneri: projeyi OneDrive dışına taşı veya Library'yi senkrondan hariç tut.
+5. Sahne/prefab üretimi hiç çalışmadı; HUD yerleşimi (1080x1920) görsel olarak doğrulanmadı, taşma/çakışma olabilir.
+6. Kamera hissi (sürükleme hızı, sınırlar, tıklama-sürükleme eşiği) ayarsız; mobil dokunma gerçek cihazda test edilmedi.
+7. Save: dosya yolu `Application.persistentDataPath/saves`; Windows'ta `File.Move` hedef varsa hata verir diye main önce siliniyor (çok kısa pencerede kayıt kaybı riski var, yedek bunu karşılıyor).
+
+### Yarım kalan / yapılmayan görevler (PHASE 01)
+- UI prefabları: Popup, ProgressBar, NotificationBadge, ItemCard, HeroCard, EventCard, ShopCard, TabNavigation, ConfirmationDialog, LoadingScreen (yalnız PrimaryButton, SecondaryButton, IconButton, ResourceCounter yapıldı)
+- Editor araçları: Import Game Assets, Generate Test Data, Run Validation
+- Kayıt: oyuncu adı/avatar düzenleme yok; kaynak değişimi için henüz oynanış yok (kaynak sabit)
+- İkonlar ve avatar metin placeholder; ses/VFX yok
+- Gerçek cihaz performans ölçümü, PlayMode testleri yok
+- Git deposu başlatılmadı (`git init` kullanıcıda)
+
+### Önemli tasarım kararları (tekrar sorgulamadan devam et)
+- Statik oyun verisi = ScriptableObject (GameConfig, `Resources/GameConfig`), oyuncu verisi = PlayerData (JSON). Kaynaklar yalnız `ResourceWallet` ile değişir; `Game.Wallet.Changed` → `GameEvents.ResourceChanged`.
+- `Game.EnsureInitialized()` her sahnede güvenle çağrılır (Base'de doğrudan Play çalışır). Domain reload kapalıysa statikler `ResetStatics` ile sıfırlanır.
+- Hangi HUD butonunun çalıştığı tek yerde: `FeatureRouter.IsAvailable` (HudFeature.cs). Yeni sistem gelince buraya ekle; buton otomatik açılır.
+- Sahneler Editor araçlarıyla üretilir; mevcut sahne/prefab üzerine yazılmaz (yalnız "Create Base Scene" onayla yazar). Sahneyi elle düzenlersen araçları yeniden çalıştırmak güvenlidir.
+- Placeholder geometri adlarında `_PH` / `[PLACEHOLDER]` var; gerçek modeller PHASE 09.
+- Resources klasörü yalnız GameConfig için kullanılır. Checksum hile koruması değil (PHASE 08'de sunucu otoriter).
+- Kod İngilizce, dokümanlar/rapor Türkçe. Eski `Input.*` yok, yalnız Input System.
+
+### Bu oturumdaki süreç notu
+Çalışma alanı bir kez sıfırlandı ve ilk yazılan kod kayboldu; aynı kod yeniden yazıldı (kamera tekerlek zoom'u normalize edildi). Kaynak gerçeği artık kullanıcının proje klasörüdür.
+
+---
+
+## Oturum 2 — 2026-11-26 (PHASE 01.5: tamamlama ve entegrasyon)
+
+Yine Unity/derleyici erişimi YOK. Aşağıdakilerin hiçbiri derlenmedi/çalıştırılmadı; yapılan tek otomatik kontrol: tüm .cs dosyalarında {} () [] denge kontrolü.
+
+### Yeni dosyalar (kod)
+- `Data/Rarity.cs` · `UI/`: RarityStyle, ButtonPressAnimator, UIPanel, ProgressBarView, NotificationBadgeView, TabNavigationView, PopupPanelView, ConfirmationDialogView, RewardPopupView, TooltipView, TooltipTrigger, LoadingScreenView, ItemCardView, HeroCardView, EventCardView, ShopCardView, UIOverlay, UIGalleryController
+- `Editor/UIPrefabGenerator.Components.cs` (15 yeni prefab), `Editor/ReferenceValidator.cs`
+- Testler: PlayerDataSerializationTests, CameraConfigurationTests, UiReferenceValidationTests
+
+### Değiştirilen dosyalar
+Loc (+~35 anahtar), NumberFormatter (+Duration), HudFeature (+BattlePass), HudController (avatar→profil), MainMenuController (onay penceresi, null koruması), ResourceCounterView (tooltip), IsometricCameraController, SceneLoader, SceneNames (+UIGallery), UIFactory (basma animasyonu, Bevel, Window), UIPrefabGenerator (partial), SceneGenerator (HUD düzeni, UIOverlay, UIGallery), PlaceholderModels (beton zemin), DeadzoneMenu (yeniden yazıldı), ProjectValidator (19 prefab + referans kontrolü), test asmdef (+Deadzone.Editor), UtilityTests (+Duration, kaynak adı anahtarları), KURULUM/TASK_STATUS/NEXT_TASK/ARCHITECTURE/UI_DESIGN_SYSTEM/TEST_PLAN.
+
+### Düzeltilen hatalar / riskler (kod incelemesiyle, Unity'de doğrulanmadı)
+1. Kamera UI engeli: `IsPointerOverGameObject(-1)` yerine `EventSystem.RaycastAll` (InputSystemUIInputModule ile pointer id sorunu riski). Tekerlek zoom'unda da UI üstü kontrolü eklendi.
+2. `SceneLoader`: Build Settings'te olmayan sahne yüklenmeye çalışılınca artık hata mesajı verip duruyor (Setup yönlendirmesiyle), sahne geçişi bozulmuyor.
+3. `MainMenuController`: buton referansı eksikse NullReference yerine açıklayıcı hata ve devre dışı kalma.
+4. "Yeni Oyun": çift dokunma yerine ConfirmationDialog (overlay yoksa log uyarısı verir; bkz. bilinen eksikler).
+5. HUD: sol/sağ buton setleri istenen listeye getirildi (sol: İnşaat, Araştırma, Görevler; sağ: Etkinlik, Takvim, VIP, Günlük Ödül, Battle Pass, Özel Teklif). Birlik Eğitimi sol butonlardan çıktı (alt barda Birlikler var).
+6. Test Framework yokken test asmdef'in derlemeyi bozmaması `defineConstraints` ile güvenceye alındı (Oturum 1'den; Test Framework sürümü sabitlenmedi, Unity 6.6 çekirdek paketi).
+
+### Tamamlanan UI bileşenleri
+PrimaryButton, SecondaryButton, IconButton, PopupPanel, ConfirmationDialog, ProgressBar, ResourceCounter (tooltip'li), HeroCard, ItemCard, EventCard, ShopCard, NotificationBadge, TabNavigation, Tooltip, LoadingScreen, RewardPopup, ScrollablePanel, SafeAreaController + UIOverlay (birleşik). Tümü prefab olarak üretilir (Setup Phase 01); görsel doğrulama yapılmadı.
+
+### Test durumu
+- Derleme: ÇALIŞTIRILMADI · EditMode: ÇALIŞTIRILMADI · Play Mode: ÇALIŞTIRILMADI.
+- Yeni testler (yazıldı): PlayerData gidiş-dönüş (4), Kamera yapılandırması (4), UI referans doğrulama (2), Duration (6+), kaynak adı yerelleştirme (1).
+
+### Bilinen eksikler
+- Yeni Oyun onayı yalnız UIOverlay ile çalışır; sahnede overlay yoksa buton bir uyarı loglar ve işlem yapmaz (eski çift dokunma yedeği kaldırıldı; MainMenu/Base/UIGallery sahnelerinde overlay Setup ile gelir).
+- Derleme hataları olabilir (Unity 6.6 / uGUI 2.6 API farkları); ikonlar/avatarlar metin placeholder; Türkçe karakter glyph'leri doğrulanmadı.
+- Hero/Item/Event/Shop kartları yalnız UIGallery'de örnek verili; oyun içinde henüz kullanılmıyor (PHASE 03+).
+- PlayMode testi yok; gerçek cihaz performansı ölçülmedi; `git init` kullanıcıda.
+- Prefab/sahne düzeni görsel olarak doğrulanmadı (taşma/çakışma olabilir).
