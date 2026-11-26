@@ -3,7 +3,7 @@ Tüm 3D modeller ve ikonlar PLACEHOLDER'dır: Unity primitiflerinden (Cube, Cyli
 
 | Varlık | Durum | Kaynak / Lisans |
 |---|---|---|
-| 6 işlevsel bina (HQ, Kışla, Hastane, Lab, Çiftlik, Çelik Fab.) + `Details_PH` (pencere, kapı çerçevesi, saçak, havalandırma, anten, HQ çanağı/direği) | Placeholder | Unity primitifleri, kendi içeriğimiz |
+| 7 işlevsel bina (HQ, Kışla, Hastane, Lab, Çiftlik, Çelik Fab., Depo) + `Details_PH` (pencere, kapı çerçevesi, saçak, havalandırma, anten, HQ çanağı/direği) | Placeholder | Unity primitifleri, kendi içeriğimiz |
 | "Military Base Props [PLACEHOLDER]": helikopter pisti, varil kümeleri, çit, jeneratör, radar çanağı, çalılar | Placeholder | Unity primitifleri, kendi içeriğimiz |
 | Duvar, yol, kule, lamba, ağaç, kamyon, tank, konteyner, ev | Placeholder | Unity primitifleri, kendi içeriğimiz |
 | Malzemeler (URP/Lit, düz renk) | Placeholder | Unity'nin yerleşik URP shader'ı, kendi içeriğimiz |
@@ -12,3 +12,5 @@ Tüm 3D modeller ve ikonlar PLACEHOLDER'dır: Unity primitiflerinden (Cube, Cyli
 | Ses / VFX | Yok | — |
 
 Mobil uyumluluk notları: URP, çoğu prop `BatchingStatic`, gölge ve ışık sayısı düşük; gerçek cihaz performansı ölçülmedi.
+
+PHASE 02.5: Blender tespit edilemedi → modeller Unity içinde prosedürel üretilir (ara çözüm); Blender kurulumu kullanıcı izniyle (BLENDER_PIPELINE.md). Tüm harici varlıklar buraya lisansıyla işlenir; şu an harici varlık YOK.

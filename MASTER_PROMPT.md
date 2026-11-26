@@ -1605,3 +1605,15 @@ Bu komutu aldıktan sonra yalnızca geliştirme planı yazıp durma.
 Erişim yetkin dahilinde gerçek geliştirme çalışmalarına başla.
 
 Nihai hedefimiz özgün, kaliteli, gerçekçi ve ticari olarak yayınlanabilir DEADZONE: LAST EMPIRE mobil strateji oyunudur.
+
+
+---
+## KALICI KURAL EKİ — PHASE 02.5 (Profesyonel Grafik, v0.2.5)
+- Toplam depolama bütçesi 3 GB: doku/materyal 900 MB, 3D modeller 650 MB, animasyonlar 300 MB, dünya/ortam 300 MB, ses 250 MB, motor+kod 200 MB, UI+efektler 100 MB, gelecek güncellemeler 300 MB. İlk indirme 300–500 MB.
+- Android öncelikli; minimum 4 GB RAM; düşük kalitede 30 FPS, yüksekte 60 FPS hedefi.
+- Doku sıkıştırma, LOD, GPU instancing, batching, atlas, nesne havuzlama; Addressables'a hazır içerik yapısı.
+- Bu hedefler gerçek cihaz ve Android build ölçümleriyle doğrulanır. Ölçülmemiş sonuçlar başarılı olarak raporlanmaz. Gerçek FPS ölçülmeden performans hedeflerinin karşılandığı iddia edilmez.
+- Kullanıcı izni olmadan yazılım veya ücretli hizmet satın alınmaz/kurulmaz. Gizli bilgiler ve gereksiz Unity cache dosyaları GitHub'a yüklenmez.
+- Her büyük görev grubundan sonra Git commit; doğrulanmış değişiklikler push edilir. Mevcut çalışan sistemler bozulmaz.
+- Cihaz saati manipülasyonu offline prototipte tamamen engellenemez (belgelendi); sunucu zamanı multiplayer aşamasına bırakıldı.
+- Ayrıntılar: PERFORMANCE_BUDGET.md, ART_DIRECTION.md, BLENDER_PIPELINE.md.

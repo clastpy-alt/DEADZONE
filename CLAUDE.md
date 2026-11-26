@@ -24,3 +24,10 @@ Bu proje eski DEADZONE projesinden BAĞIMSIZDIR; eski dosyalar kullanılmaz/değ
 ## Klasörler
 Assets/_Game/{Scripts,Scenes,Prefabs,Art,ScriptableObjects,Resources,Tests}
 Namespace: Deadzone.Core, .Data, .SaveSystem, .Economy, .Buildings, .UI, .EditorTools
+
+## Performans ve görsel kalite (KALICI — PERFORMANCE_BUDGET.md, ART_DIRECTION.md)
+- Bütçe: toplam 3 GB (doku/materyal 900, 3D model 650, animasyon 300, ortam 300, ses 250, motor+kod 200, UI+efekt 100, gelecek güncellemeler 300 MB); ilk indirme 300–500 MB.
+- Android öncelikli, min 4 GB RAM; hedef 30 FPS (düşük) / 60 FPS (yüksek). Sıkıştırma, LOD, instancing, batching, atlas, havuzlama; Addressables'a hazır yapı.
+- Hedefler gerçek cihaz/Android build ölçümüyle doğrulanır. Ölçülmemiş sonuç ASLA başarılı raporlanmaz; editör ölçümü cihaz ölçümü değildir.
+- Yazılım kurma / ücretli hizmet satın alma: yalnız kullanıcı izniyle. Harici varlıklar lisansıyla ASSET_REGISTER.md'ye işlenir.
+- Yeni görsel işlerde bina kimliği, seviye, kayıt, collider ve seçim bozulmaz; mevcut çalışan sistem bozulmaz.
