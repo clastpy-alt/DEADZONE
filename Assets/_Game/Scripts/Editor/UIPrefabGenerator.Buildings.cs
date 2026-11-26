@@ -74,17 +74,29 @@ namespace Deadzone.EditorTools
 
             // Header: image placeholder, name, level, close
             Image icon = UIFactory.Panel("BuildingImage_PH", content.transform, UIColors.MilitaryGreen, false);
-            UIFactory.Place(icon.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -24f), new Vector2(140f, 140f));
+            UIFactory.Place(icon.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -24f), new Vector2(220f, 220f));
             UIFactory.AddOutline(icon, UIColors.Silver, 3f);
             TextMeshProUGUI iconLabel = UIFactory.Text("IconLabel", icon.transform, "BLD", 40f, UIColors.TextPrimary, TextAlignmentOptions.Center, FontStyles.Bold);
             UIFactory.Stretch(iconLabel.rectTransform);
             w.icon = icon;
             w.iconLabel = iconLabel;
 
+            // Live 3D preview (BuildingPreview renders the selected building into this RawImage).
+            var previewObject = new GameObject("Preview", typeof(RectTransform), typeof(RawImage), typeof(BuildingPreview));
+            previewObject.transform.SetParent(icon.transform, false);
+            UIFactory.Stretch((RectTransform)previewObject.transform);
+            ((RectTransform)previewObject.transform).offsetMin = new Vector2(6f, 6f);
+            ((RectTransform)previewObject.transform).offsetMax = new Vector2(-6f, -6f);
+            var raw = previewObject.GetComponent<RawImage>();
+            raw.raycastTarget = false;
+            raw.enabled = false;
+            previewObject.GetComponent<BuildingPreview>().Bind(raw);
+            w.preview = raw;
+
             w.nameText = Body(content.transform, "BuildingName", 44f, 26f, TextAlignmentOptions.Left, UIColors.TextPrimary, FontStyles.Bold);
-            Strip(w.nameText.rectTransform, 184f, 210f, 20f, 60f);
+            Strip(w.nameText.rectTransform, 264f, 210f, 20f, 60f);
             w.levelText = Body(content.transform, "BuildingLevel", 32f, 20f, TextAlignmentOptions.Left, UIColors.TextSecondary);
-            Strip(w.levelText.rectTransform, 184f, 210f, 84f, 46f);
+            Strip(w.levelText.rectTransform, 264f, 210f, 84f, 46f);
 
             Button close = UIFactory.CreateButton("CloseButton", content.transform, UIColors.Panel, UIColors.Silver, "popup.close", 30f, out _);
             UIFactory.Place((RectTransform)close.transform, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-20f, -20f), new Vector2(180f, 84f));
@@ -92,25 +104,25 @@ namespace Deadzone.EditorTools
 
             // Description + benefits
             w.descriptionText = Body(content.transform, "Description", 28f, 20f, TextAlignmentOptions.TopLeft, UIColors.TextSecondary);
-            Strip(w.descriptionText.rectTransform, 28f, 28f, 172f, 72f);
+            Strip(w.descriptionText.rectTransform, 264f, 28f, 140f, 104f);
 
             w.currentText = Body(content.transform, "CurrentBenefits", 28f, 20f, TextAlignmentOptions.TopLeft, UIColors.TextPrimary);
-            Column(w.currentText.rectTransform, 0f, 0.5f, 28f, 12f, 252f, 150f);
+            Column(w.currentText.rectTransform, 0f, 0.5f, 28f, 12f, 258f, 160f);
             w.nextText = Body(content.transform, "NextBenefits", 28f, 20f, TextAlignmentOptions.TopLeft, UIColors.TextPrimary);
-            Column(w.nextText.rectTransform, 0.5f, 1f, 12f, 28f, 252f, 150f);
+            Column(w.nextText.rectTransform, 0.5f, 1f, 12f, 28f, 258f, 160f);
 
             // Cost, duration, requirements
             w.costText = Body(content.transform, "Cost", 30f, 20f, TextAlignmentOptions.TopLeft, UIColors.TextPrimary);
-            Strip(w.costText.rectTransform, 28f, 28f, 406f, 120f);
+            Strip(w.costText.rectTransform, 28f, 28f, 426f, 112f);
             w.requirementsText = Body(content.transform, "Requirements", 28f, 20f, TextAlignmentOptions.TopLeft, UIColors.TextPrimary);
-            Strip(w.requirementsText.rectTransform, 28f, 28f, 530f, 128f);
+            Strip(w.requirementsText.rectTransform, 28f, 28f, 544f, 128f);
 
             // Reason (disabled upgrade) / running construction
             w.reasonText = Body(content.transform, "Reason", 30f, 20f, TextAlignmentOptions.Center, UIColors.Danger, FontStyles.Bold);
-            Strip(w.reasonText.rectTransform, 28f, 28f, 664f, 56f);
+            Strip(w.reasonText.rectTransform, 28f, 28f, 684f, 56f);
 
             RectTransform progress = UIFactory.Rect("Progress", content.transform);
-            Strip(progress, 28f, 28f, 664f, 56f);
+            Strip(progress, 28f, 28f, 684f, 56f);
             GameObject bar = Instantiate(ProgressBarPath, progress);
             var barRect = (RectTransform)bar.transform;
             barRect.anchorMin = new Vector2(0f, 0.5f);

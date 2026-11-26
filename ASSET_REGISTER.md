@@ -16,3 +16,6 @@ Tüm 3D modeller ve ikonlar PLACEHOLDER'dır: Unity primitiflerinden (Cube, Cyli
 Mobil uyumluluk notları: URP, çoğu prop `BatchingStatic`, gölge ve ışık sayısı düşük; gerçek cihaz performansı ölçülmedi.
 
 PHASE 02.5: Blender tespit edilemedi → modeller Unity içinde prosedürel üretilir (ara çözüm); Blender kurulumu kullanıcı izniyle (BLENDER_PIPELINE.md). Tüm harici varlıklar buraya lisansıyla işlenir; şu an harici varlık YOK.
+
+
+PHASE 02.5 eklenenler (hepsi kendi üretimimiz, dış varlık yok): 34 prosedürel SDF ikon PNG'si (`Resources/Icons`, `UiIconGenerator`); 25 `Mil_*` materyal; 7 bina için `Mil_Visual` prosedürel modeller (Unity içinde); URP_Low/Medium/High varlıkları; `GraphicsProfiles`; LOD1 kutu vekilleri (`Mil_LOD1`). Dış lisanslı varlık: yok.

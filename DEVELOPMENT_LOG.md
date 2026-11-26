@@ -197,3 +197,22 @@ Derleme 0 hata; EditMode 124/124 (108 + 16 yeni kademe testi); PlayMode 9/9; Sce
 - Kademe 2–7'nin Play'de görsel doğrulaması ve oyun içi (Game view, 1080x1920) ekran görüntüleri sonraki adımda.
 - Dikey kare/üçgen sayısı ve FPS ölçülmedi; LOD henüz yok (02.63 Generate LOD Models).
 - Modeller primitif birleşimidir; gerçek sanatçı modeli değildir (PHASE 09).
+
+
+## Oturum 6 — PHASE 02.5, Grup 4–6: HUD, bina UI, kamera, grafik ayarları, LOD, QA (02.56 / 02.58–02.65)
+### Yapılanlar
+- Premium HUD (`PremiumHudGenerator`, SerializedObject ile kalıcı yama): 34 prosedürel SDF ikon (`Resources/Icons`), kaynak sayaçları ikonlu, avatar+çerçeve+seviye rozeti, VIP, sağ üstte dişli (eski Kaydet düğmesi → Ayarlar), alt gezinme ve yan menü ikonları, kilit ikonu, inşaat zamanlayıcı hapı + sayaç balonu (`HudStatusView`).
+- Ayarlar paneli (`SettingsPanel`): DÜŞÜK/ORTA/YÜKSEK (PlayerPrefs `deadzone.graphics.quality`), dil, "Şimdi Kaydet"; FPS hedefleri "cihazda ölçülmedi" notuyla.
+- Grafik: URP_Low/Medium/High, `GraphicsSettingsService`, `GraphicsProfileSet`, ışık donanımı (Setup Lighting Profiles). Işık/probe bake YAPILMADI.
+- Bina UI v3: büyük canlı önizleme (`BuildingPreview`, RenderTexture 384², 15 FPS, yalnız seçiliyken), mevcut/sonraki karşılaştırma, küçük seviye rozeti (`BuildingWorldLabel`: kademe rengi, inşaatta ince ilerleme + süre), inşaat sırasında Hızlandır onayı.
+- Kamera: başlangıç zoom 26, maks 40, atalet, seçimde odaklanma (`focusOnSelect`).
+- LOD: `Generate LOD Models` (LOD1 kutu vekili %2 ekran yüksekliğinde; pratikte nadiren devreye girer). `Generate Performance Report` statik analiz üretir (cihaz ölçümü değil).
+### Bulunan/çözülen hatalar
+- Önizleme boş kare: kamera, modelin pivotunun kardeşi değil AYNI nesnedeydi → model kamerayla birlikte kayıyordu. Kamera ayrı alt nesneye alındı (PlayMode regresyon testi var). Ayrıca sahne örneği statik batch'li olduğundan klonlama prefab varlığından yapılır.
+- HUD sayaç ikonları play sonrası düz renge dönüyordu (prefab-instance değişikliği kaydedilmiyordu) → `SerializedObject` ile yazım.
+### Doğrulama (ölçüldü)
+Derleme 0 hata; EditMode 140/140; PlayMode 14/14 (+1 isteğe bağlı ekran görüntüsü testi); Validate Graphics OK; Play'de ayarlar paneli (3 kalite, dil, kaydet), önizleme ve inşaat rozeti görüldü; 8 dikey ekran görüntüsü 1080x1920 → `Docs/Screenshots/Phase025/` (01_base_overview … 08_high_mode).
+### Açık / dürüst notlar
+- Gerçek cihaz FPS/RAM/ısınma ÖLÇÜLMEDİ; hedefler (30/45/60) yalnız hedef. Statik rapor: 191.676 üçgen (LOD0, tüm katmanlar; Yüksek bütçesi ≤400 bin), 593 aktif MeshRenderer, 51 materyal; Low profili için üçgen bütçesi (≤150 bin) kamera kırpması olmadan aşılmış görünür — cihaz ölçümü şart.
+- "Önce/sonra" karşılaştırması: Faz 02 görüntüsü kayıtlı olmadığından üretilmedi.
+- Bina bilgi panelinde karşılaştırma ile maliyet arasında boş bir şerit var (kozmetik).

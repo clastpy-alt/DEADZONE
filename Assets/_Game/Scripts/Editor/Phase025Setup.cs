@@ -15,7 +15,8 @@ namespace Deadzone.EditorTools
     /// </summary>
     internal static class Phase025Setup
     {
-        public static readonly Vector3 WarehousePosition = new Vector3(0f, 0f, -12f);
+        /// <summary>PHASE 02.56: moved off the main road (was 0,0,-12). See BaseEnvironmentGenerator.</summary>
+        public static readonly Vector3 WarehousePosition = BaseEnvironmentGenerator.WarehousePosition;
 
         /// <summary>Makes the Warehouse a functional starting building with a curve that keeps up with the upgrade costs.</summary>
         public static string PatchWarehouseData()

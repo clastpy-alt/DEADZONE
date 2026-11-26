@@ -16,6 +16,11 @@
 | B-013 | ÇÖZÜLDÜ (02.5) | Seçim durumu (`BuildingSelectionController`) hiçbir sahnede bileşen olmadığı için tutulmuyordu; bilgi panelinin Kapat tuşu seçim halkasını temizlemiyordu. Durum artık `GameEvents.RaiseBuildingSelected` içinde statik tutuluyor (PlayMode testi buldu). |
 | B-014 | ÇÖZÜLDÜ (02.5) | Yeni kayıt başlangıç zamanını gerçek sistem saatinden alıyordu (`PlayerData.CreateNew`); oyun saatiyle 1 sn kayma → üretim 1199 yerine 1200. `SaveService.Clock`/`CreateNew(config, nowUtc)` ile tek zaman kaynağı. |
 | B-015 | BİLGİ | Test Runner ayrı pencerede açıkken Unity ana pencere odak almadığı için yeni .cs dosyaları derlenmez; Test Runner'ı kapatıp ana pencerede Ctrl+R gerekir (OneDrive klasörü). |
+| B-016 | ÇÖZÜLDÜ (02.5) | Bina önizlemesi boştu: önizleme kamerası modelin pivotuyla aynı nesnedeydi, model kamerayla hareket ediyordu. Kamera ayrı nesne; PlayMode testi (`BuildingPreview_RendersTheSelectedBuilding_IntoARenderTexture`) merkezde olmayı denetler. |
+| B-017 | ÇÖZÜLDÜ (02.5) | HUD ikonları play sonrası kayboluyordu (prefab-instance değişikliği); SerializedObject ile yazılıyor. |
+| B-018 | AÇIK | Bina bilgi panelinde karşılaştırma ile maliyet arasında kozmetik boşluk. |
+| B-019 | BİLGİ | `device_commit_files` bazen eski dosya bırakıyor; commit sonrası dosya boyutu doğrulanmalı. LOD1 vekili pratikte nadiren tetiklenir; Low üçgen bütçesi cihazda ölçülmeli. |
+
 
 ## Bilinen riskler
 - Gerçek cihazda performans/dokunma hissi ölçülmedi.

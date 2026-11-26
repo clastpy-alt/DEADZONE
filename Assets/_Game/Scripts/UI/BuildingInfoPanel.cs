@@ -22,6 +22,7 @@ namespace Deadzone.UI
         {
             public GameObject content;
             public Image icon;
+            public RawImage preview;
             public TMP_Text iconLabel, nameText, levelText, descriptionText, currentText, nextText, costText, requirementsText, reasonText;
             public GameObject progressGroup;
             public ProgressBarView progressBar;
@@ -31,11 +32,12 @@ namespace Deadzone.UI
         }
 
         /// <summary>Bump when the generated layout changes: the scene patcher then rebuilds older panels.</summary>
-        public const int CurrentLayout = 2;
+        public const int CurrentLayout = 3;
 
         [SerializeField] private int layoutVersion;
         [SerializeField] private GameObject content;
         [SerializeField] private Image iconImage;
+        [SerializeField] private BuildingPreview preview;
         [SerializeField] private TMP_Text iconLabel;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text levelText;
@@ -72,6 +74,7 @@ namespace Deadzone.UI
             layoutVersion = CurrentLayout;
             content = w.content;
             iconImage = w.icon;
+            preview = w.preview != null ? w.preview.GetComponent<BuildingPreview>() : null;
             iconLabel = w.iconLabel;
             nameText = w.nameText;
             levelText = w.levelText;
@@ -139,11 +142,17 @@ namespace Deadzone.UI
         {
             current = building;
             timer = 0f;
+            if (preview != null) preview.Show(building);
             Refresh();
         }
 
         private void OnResourceChanged(ResourceType type, long amount) => Refresh();
-        private void OnConstructionCompleted(string buildingId, int level) => Refresh();
+        private void OnConstructionCompleted(string buildingId, int level)
+        {
+            // A finished upgrade can change the visual tier: rebuild the preview clone.
+            if (preview != null && current != null && current.BuildingId == buildingId) preview.Show(current);
+            Refresh();
+        }
 
         private void OnBuildingChanged(string buildingId)
         {
@@ -156,9 +165,32 @@ namespace Deadzone.UI
         {
             if (current == null || !Game.IsInitialized) return;
 
+            if (Game.Upgrades.GetJob(current.BuildingId) != null)
+            {
+                ShowSpeedUp(current.BuildingId);
+                return;
+            }
+
             UpgradeBlockReason reason = Game.Upgrades.TryStartUpgrade(current.BuildingId);
             ToastView.Show(Loc.T(reason == UpgradeBlockReason.None ? "up.started" : ReasonKey(reason)));
             Refresh();
+        }
+
+        /// <summary>Speed-up screen: remaining time, diamond cost and balance, confirmed before anything is spent.</summary>
+        private static void ShowSpeedUp(string buildingId)
+        {
+            ConstructionJobData job = Game.Upgrades.GetJob(buildingId);
+            if (job == null) return;
+
+            long cost = Game.Upgrades.GetInstantFinishCost(buildingId);
+            string remaining = NumberFormatter.Duration(TimeSpan.FromSeconds(Game.Upgrades.RemainingSeconds(job)));
+            string message = string.Format(Loc.T("bi.speedup.detail"), remaining, cost, Game.Wallet.Get(ResourceType.Diamonds));
+
+            UIOverlay.Confirm(Loc.T("bi.speedup"), message, () =>
+            {
+                if (Game.Upgrades.GetJob(buildingId) == null) return;
+                if (!Game.Upgrades.TryInstantFinish(buildingId)) ToastView.Show(Loc.T("cq.nodiamonds"));
+            });
         }
 
         private void OnCollectClicked()
@@ -226,8 +258,8 @@ namespace Deadzone.UI
 
             // Upgrade button + reason
             bool upgrading = job != null;
-            if (upgradeButton != null) upgradeButton.interactable = check.CanUpgrade;
-            Set(upgradeLabel, Loc.T(upgrading ? "bi.upgrading" : "building.upgrade"));
+            if (upgradeButton != null) upgradeButton.interactable = check.CanUpgrade || upgrading;
+            Set(upgradeLabel, Loc.T(upgrading ? "bi.speedup" : "building.upgrade"));
             if (reasonText != null)
             {
                 bool showReason = !check.CanUpgrade && !upgrading;

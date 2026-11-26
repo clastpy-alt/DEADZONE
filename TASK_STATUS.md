@@ -28,7 +28,15 @@ Ortam: Unity 6000.6.10f1, URP 17.6.0, Input System 1.20.1, uGUI 2.6.0. Derleme: 
 - COMPLETED      02.54 7 bina için ayrıntılı askeri model (Unity içinde primitif birleşimi, malzeme başına birleştirilmiş mesh); HQ + Kışla + Hastane + Lab + Çiftlik + Çelik Fabrikası + Depo; kimlik/seviye/collider/seçim korunur (Unity'de görsel doğrulandı)
 - COMPLETED      02.55 7 kademeli görsel sistem (`BuildingVisualTiers`, L1–5…L31–35, eklemeli). Kademe 1 Unity'de görüldü; kademe 2–7 yalnızca EditMode testle doğrulandı, Play'de görsel olarak HENÜZ görülmedi
 - COMPLETED      02.57 25 `Mil_*` URP/Lit materyal kütüphanesi (GPU instancing)
-- PENDING        02.56, 02.58–02.65 ortam, ışık/atmosfer + LOW/MEDIUM/HIGH, kamera, HUD, bina UI, grafik ayarları, kalan menü araçları, QA, dokümanlar
+- COMPLETED      02.56 Ortam (Upgrade Base Environment, jeneratör işaretli parçalar)
+- COMPLETED      02.58 Işık donanımı + LOW/MEDIUM/HIGH profilleri (bake yapılmadı)
+- COMPLETED      02.59 Kamera (zoom 26/40, atalet, seçimde odak)
+- COMPLETED      02.60 Premium HUD + ikon seti + inşaat sayaç hapı
+- COMPLETED      02.61 Bina UI v3: canlı önizleme, karşılaştırma, küçük rozet, Hızlandır
+- COMPLETED      02.62 Grafik ayarları paneli (kayıtlı, FPS hedefleri "ölçülmedi" notlu)
+- COMPLETED      02.63 Menü araçları (Setup 02.5, Premium HUD, LOD, Validate Graphics, Performance Report — statik)
+- COMPLETED      02.64 QA: EditMode 140/140, PlayMode 14/14, 8 ekran görüntüsü 1080x1920
+- COMPLETED      02.65 Dokümanlar güncellendi
 - TEST_REQUIRED  Gerçek cihaz/Android build FPS ve bellek ölçümleri — ölçülmedi; hiçbir performans hedefi karşılandı olarak raporlanmaz
 
 ## Unity'de elle doğrulananlar (Play, Portrait 1080x1920 Game görünümü)

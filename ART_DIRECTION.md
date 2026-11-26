@@ -63,3 +63,7 @@ Koyu panel + altın dış çizgi + gümüş bevel; premium HUD (02.60): temiz ka
 - Lisansı belirsiz varlık (her harici varlık `ASSET_REGISTER.md`'ye lisansıyla işlenir).
 - Gereksiz yüksek poligon, 4096 doku, her bina için ayrı materyal.
 - Gerçek bir kuruma/markaya ait amblem.
+
+
+## PHASE 02.5 uygulama notu
+Askeri model/kademe, ortam, ışık donanımı ve grafik profilleri uygulandı; ekran görüntüleri `Docs/Screenshots/Phase025/`. Modeller primitif birleşimidir (sanatçı modeli PHASE 09). Işık/probe bake yapılmadı; Blender kullanılmadı.

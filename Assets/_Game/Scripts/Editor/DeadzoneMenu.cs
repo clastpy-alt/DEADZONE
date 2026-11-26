@@ -199,6 +199,90 @@ namespace Deadzone.EditorTools
             Debug.Log("[DEADZONE] Military models rebuilt:\n" + MilitaryModelGenerator.Generate(true));
         }
 
+        [MenuItem("Tools/DEADZONE/Upgrade Base Environment", priority = 52)]
+        private static void UpgradeBaseEnvironment()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log("[DEADZONE] Base environment:\n" + BaseEnvironmentGenerator.Generate(false));
+        }
+
+        [MenuItem("Tools/DEADZONE/Rebuild Base Environment (Generated Only)", priority = 53)]
+        private static void RebuildBaseEnvironment()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            if (!EditorUtility.DisplayDialog("Rebuild Base Environment",
+                    "This deletes and regenerates ONLY the 'Base Environment v2 [PLACEHOLDER]' object in the Base scene. Manual edits inside it are lost. Continue?",
+                    "Rebuild", "Cancel")) return;
+            Debug.Log("[DEADZONE] Base environment rebuilt:\n" + BaseEnvironmentGenerator.Generate(true));
+        }
+
+        [MenuItem("Tools/DEADZONE/Setup Lighting Profiles", priority = 54)]
+        private static void SetupLightingProfiles()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log("[DEADZONE] Graphics profiles:\n" + GraphicsProfileGenerator.Generate());
+            Debug.Log("[DEADZONE] Lighting:\n" + LightingSetup.ApplyToBaseScene(false));
+        }
+
+        [MenuItem("Tools/DEADZONE/Rebuild Lighting Rig (Generated Only)", priority = 55)]
+        private static void RebuildLightingRig()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            if (!EditorUtility.DisplayDialog("Rebuild Lighting Rig",
+                    "This deletes and regenerates ONLY the 'Lighting Rig [GENERATED]' object and re-applies sun, ambient and fog of the Base scene. Continue?",
+                    "Rebuild", "Cancel")) return;
+            Debug.Log("[DEADZONE] Lighting rebuilt:\n" + LightingSetup.ApplyToBaseScene(true));
+        }
+
+        [MenuItem("Tools/DEADZONE/Setup Phase 02.5 (Run After Phase 02)", priority = 2)]
+        private static void SetupPhase025()
+        {
+            if (!ProjectSetup.CheckTextMeshPro()) return;
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+            Debug.Log("[DEADZONE] Military materials: " + MilitaryMaterials.GenerateAll() + " new material(s).");
+            BuildingPrefabGenerator.GenerateAll(false);
+            Debug.Log("[DEADZONE] Military models:\n" + MilitaryModelGenerator.Generate(false));
+            Debug.Log("[DEADZONE] Base environment:\n" + BaseEnvironmentGenerator.Generate(false));
+            Debug.Log("[DEADZONE] Graphics profiles:\n" + GraphicsProfileGenerator.Generate());
+            Debug.Log("[DEADZONE] Lighting:\n" + LightingSetup.ApplyToBaseScene(false));
+            Debug.Log("[DEADZONE] Premium HUD:\n" + PremiumHudGenerator.Generate());
+            Debug.Log("[DEADZONE] LOD models:\n" + GraphicsTools.GenerateLodModels());
+            AssetDatabase.SaveAssets();
+            ReportGraphics();
+            Debug.Log("[DEADZONE] Setup Phase 02.5 finished.");
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate Premium HUD", priority = 56)]
+        private static void GeneratePremiumHud()
+        {
+            if (!ProjectSetup.CheckTextMeshPro()) return;
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log("[DEADZONE] Premium HUD:\n" + PremiumHudGenerator.Generate());
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate LOD Models", priority = 57)]
+        private static void GenerateLodModels()
+        {
+            Debug.Log("[DEADZONE] LOD models:\n" + GraphicsTools.GenerateLodModels());
+        }
+
+        [MenuItem("Tools/DEADZONE/Validate Graphics", priority = 25)]
+        private static void ValidateGraphics() => ReportGraphics();
+
+        [MenuItem("Tools/DEADZONE/Generate Performance Report", priority = 58)]
+        private static void GeneratePerformanceReport()
+        {
+            Debug.Log("[DEADZONE] Performance report (static analysis, not a device measurement):\n" + GraphicsTools.GeneratePerformanceReport());
+        }
+
+        private static void ReportGraphics()
+        {
+            var problems = GraphicsTools.ValidateGraphics(out string summary);
+            if (problems.Count == 0) Debug.Log("[DEADZONE] Validate Graphics: OK\n" + summary);
+            else Debug.LogWarning("[DEADZONE] Validate Graphics: " + problems.Count + " problem(s)\n- " + string.Join("\n- ", problems) + "\n" + summary);
+        }
+
         [MenuItem("Tools/DEADZONE/Validate Buildings", priority = 22)]
         private static void ValidateBuildings() => Phase02Validators.Report("Validate Buildings", Phase02Validators.ValidateBuildings(), true);
 

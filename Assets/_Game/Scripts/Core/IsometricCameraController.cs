@@ -21,14 +21,20 @@ namespace Deadzone.Core
         [SerializeField] private Vector3 startFocus = new Vector3(0f, 0f, 2f);
 
         [Header("Zoom (orthographic size)")]
-        [SerializeField] private float startZoom = 22f; // portrait 9:16 needs a wide view; 14 (PHASE 01) showed only ~16 units
+        [SerializeField] private float startZoom = 26f; // portrait 9:16 needs a wide view (PHASE 01: 14, PHASE 02: 22, PHASE 02.5: 26 shows the whole compound)
         [SerializeField] private float minZoom = 7f;
-        [SerializeField] private float maxZoom = 34f;
+        [SerializeField] private float maxZoom = 40f;
         [SerializeField] private float wheelZoomStep = 1.5f;
 
         [Header("Feel")]
         [SerializeField] private float smoothing = 12f;
         [SerializeField] private float dragThresholdPixels = 12f;
+        [SerializeField] private float panInertia = 5f; // how fast a released drag glides to a stop (higher = stops sooner)
+
+        [Header("Building focus (PHASE 02.5)")]
+        [SerializeField] private bool focusOnSelect = true;
+        [SerializeField] private float selectionZoom = 17f;      // soft approach: zooms in to this size, never zooms out
+        [SerializeField] private float selectionScreenLift = 0.2f; // keeps the building in the upper part of the screen, above the info sheet
 
         [Header("Boundaries (world XZ)")]
         [SerializeField] private Vector2 boundsMin = new Vector2(-40f, -45f);
@@ -51,6 +57,7 @@ namespace Deadzone.Core
         private bool moved;
         private bool suppressGesture;
         private Vector2 pressPosition;
+        private Vector3 panVelocity;
         private BuildingSelectable selected;
 
         private void Awake()
@@ -72,6 +79,7 @@ namespace Deadzone.Core
                 HandlePointer();
             }
             HandleWheel();
+            ApplyPanInertia();
 
             float t = 1f - Mathf.Exp(-smoothing * Time.unscaledDeltaTime);
             currentFocus = Vector3.Lerp(currentFocus, targetFocus, t);
@@ -82,6 +90,30 @@ namespace Deadzone.Core
         public void FocusOn(Vector3 worldPoint)
         {
             targetFocus = ClampFocus(new Vector3(worldPoint.x, 0f, worldPoint.z));
+        }
+
+        private void ApplyPanInertia()
+        {
+            if (isPressing || panVelocity.sqrMagnitude < 0.01f)
+            {
+                if (!isPressing) panVelocity = Vector3.zero;
+                return;
+            }
+
+            float dt = Time.unscaledDeltaTime;
+            targetFocus = ClampFocus(targetFocus + panVelocity * dt);
+            panVelocity = Vector3.Lerp(panVelocity, Vector3.zero, 1f - Mathf.Exp(-panInertia * dt));
+        }
+
+        /// <summary>Soft approach to a selected building: zooms in a little and lifts it above the bottom info sheet.</summary>
+        private void ApproachSelected(Vector3 worldPoint)
+        {
+            targetZoom = Mathf.Clamp(Mathf.Min(targetZoom, selectionZoom), minZoom, maxZoom);
+            float sinPitch = Mathf.Max(0.2f, Mathf.Sin(pitch * Mathf.Deg2Rad));
+            Vector3 forward = Quaternion.Euler(0f, yaw, 0f) * Vector3.forward;
+            float lift = selectionScreenLift * 2f * targetZoom;
+            targetFocus = ClampFocus(new Vector3(worldPoint.x, 0f, worldPoint.z) - forward * (lift / sinPitch));
+            panVelocity = Vector3.zero;
         }
 
         public void ResetView()
@@ -148,6 +180,7 @@ namespace Deadzone.Core
             }
 
             suppressGesture = true;
+            panVelocity = Vector3.zero;
             return true;
         }
 
@@ -161,6 +194,7 @@ namespace Deadzone.Core
                 isPressing = true;
                 moved = false;
                 suppressGesture = false;
+                panVelocity = Vector3.zero;
                 pressPosition = pointer.position.ReadValue();
                 startedOverUi = IsOverUi(pressPosition);
             }
@@ -176,7 +210,9 @@ namespace Deadzone.Core
                 }
                 if (moved)
                 {
-                    Pan(pointer.delta.ReadValue());
+                    Vector3 move = Pan(pointer.delta.ReadValue());
+                    float dt = Mathf.Max(Time.unscaledDeltaTime, 0.001f);
+                    panVelocity = Vector3.ClampMagnitude(Vector3.Lerp(panVelocity, move / dt, 0.5f), 60f);
                 }
             }
 
@@ -190,9 +226,9 @@ namespace Deadzone.Core
             }
         }
 
-        private void Pan(Vector2 deltaPixels)
+        private Vector3 Pan(Vector2 deltaPixels)
         {
-            if (Screen.height <= 0) return;
+            if (Screen.height <= 0) return Vector3.zero;
 
             float unitsPerPixel = 2f * currentZoom / Screen.height;
             Quaternion yawRotation = Quaternion.Euler(0f, yaw, 0f);
@@ -201,7 +237,9 @@ namespace Deadzone.Core
             float sinPitch = Mathf.Max(0.2f, Mathf.Sin(pitch * Mathf.Deg2Rad));
 
             Vector3 move = (-right * deltaPixels.x - forward * (deltaPixels.y / sinPitch)) * unitsPerPixel;
+            Vector3 before = targetFocus;
             targetFocus = ClampFocus(targetFocus + move);
+            return targetFocus - before; // actual movement after clamping, so inertia never pushes against a boundary
         }
 
         private void TrySelect(Vector2 screenPosition)
@@ -221,6 +259,7 @@ namespace Deadzone.Core
             selected = building;
             if (selected != null) selected.SetSelected(true);
             GameEvents.RaiseBuildingSelected(selected);
+            if (selected != null && focusOnSelect) ApproachSelected(selected.transform.position);
         }
 
         /// <summary>Raycasts the UI directly, so it does not depend on which input module / pointer id is active.</summary>

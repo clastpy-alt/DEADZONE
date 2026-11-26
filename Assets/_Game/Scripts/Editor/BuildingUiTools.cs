@@ -73,6 +73,18 @@ namespace Deadzone.EditorTools
                         serialized.ApplyModifiedPropertiesWithoutUndo();
                         report.AppendLine("camera start zoom 14 -> 22");
                     }
+
+                    // PHASE 02.5: portrait view that shows the whole compound (22 -> 26, max 34 -> 40), only while still at the old defaults.
+                    zoom = serialized.FindProperty("startZoom");
+                    SerializedProperty maxZoom = serialized.FindProperty("maxZoom");
+                    bool changed = false;
+                    if (zoom != null && Mathf.Abs(zoom.floatValue - 22f) < 0.01f) { zoom.floatValue = 26f; changed = true; }
+                    if (maxZoom != null && Mathf.Abs(maxZoom.floatValue - 34f) < 0.01f) { maxZoom.floatValue = 40f; changed = true; }
+                    if (changed)
+                    {
+                        serialized.ApplyModifiedPropertiesWithoutUndo();
+                        report.AppendLine("camera zoom: start 26, max 40");
+                    }
                 }
 
                 // 2) Construction queue window

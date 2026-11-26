@@ -14,3 +14,11 @@ Nadirlik renkleri ve kodları: RarityStyle (Common gri, Uncommon yeşil, Rare ma
 ## Prefablar (Assets/_Game/Prefabs/UI)
 PrimaryButton, SecondaryButton, IconButton, ResourceCounter, PopupPanel, ConfirmationDialog, RewardPopup, Tooltip, LoadingScreen, ProgressBar, NotificationBadge, TabNavigation, ScrollablePanel, SafeAreaController, HeroCard, ItemCard, EventCard, ShopCard, UIOverlay.
 Önizleme: Tools > DEADZONE > Open UI Gallery.
+
+
+## PHASE 02.5 güncellemesi
+- İkonlar artık prosedürel SDF PNG'ler (`Resources/Icons`, `UiIcons.Get`): kaynaklar, HUD, gezinme, yan menü, seviye rozeti.
+- HUD: avatar+rozet, VIP, sağ üstte dişli (Ayarlar), ikonlu sayaçlar, kilitli özellikte kilit ikonu, inşaat zamanlayıcı hapı + sayaç balonu.
+- Bina bilgisi (layout v3): 220 px canlı önizleme, mevcut/sonraki karşılaştırma, maliyet/süre, gereksinimler, ilerleme; inşaatta Hızlandır.
+- Dünya üstü seviye göstergesi: küçük askeri rozet (kademe rengi 1–7); yalnız yükseltmede ince çubuk + süre.
+- Ayarlar: grafik kalitesi, dil, Şimdi Kaydet.

@@ -31,3 +31,14 @@ Namespace: Deadzone.Core, .Data, .SaveSystem, .Economy, .Buildings, .UI, .Editor
 - Hedefler gerçek cihaz/Android build ölçümüyle doğrulanır. Ölçülmemiş sonuç ASLA başarılı raporlanmaz; editör ölçümü cihaz ölçümü değildir.
 - Yazılım kurma / ücretli hizmet satın alma: yalnız kullanıcı izniyle. Harici varlıklar lisansıyla ASSET_REGISTER.md'ye işlenir.
 - Yeni görsel işlerde bina kimliği, seviye, kayıt, collider ve seçim bozulmaz; mevcut çalışan sistem bozulmaz.
+
+## Token ve kullanım verimliliği (KALICI)
+- Yalnızca mevcut görevle ilgili dosyaları incele; bütün projeyi gereksiz yere tarama.
+- Çalışan kodu yeniden yazma; mevcut kodda hedefli değişiklik yap (Edit/str_replace).
+- Dosya içeriklerini sohbette tekrar gösterme. Uzun açıklama ve gereksiz planlamadan kaçın.
+- Mümkün olduğunda terminal, Unity batch mode ve log dosyalarını kullan; bilgisayar kontrolü/ekran görüntüsünü yalnız görsel doğrulama için kullan.
+- Gereksiz paralel ajan oluşturma.
+- Testleri mantıksal görev gruplarından sonra çalıştır; testlerden ve kod kalitesinden ödün verme.
+- DEVELOPMENT_LOG.md ve NEXT_TASK.md kısa ve güncel tutulur.
+- Her görev sonunda en fazla 200 kelimelik sonuç raporu ver.
+- 3 GB toplam oyun boyutu sınırı korunur.

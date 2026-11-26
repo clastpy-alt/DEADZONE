@@ -57,6 +57,15 @@ namespace Deadzone.EditorTools
             new Def("Mil_Crop", "#4F7A3A", 0f, 0.1f),
             new Def("Mil_Soil", "#4A3B2A", 0f, 0.1f),
             new Def("Mil_Rubber", "#1A1C1F", 0f, 0.15f),
+            // PHASE 02.56 environment additions
+            new Def("Mil_ConcreteDamaged", "#4B5057", 0f, 0.1f),
+            new Def("Mil_Stain", "#15171A", 0f, 0.35f),
+            new Def("Mil_Dirt", "#5A4A38", 0f, 0.05f),
+            new Def("Mil_Grass", "#3E5A34", 0f, 0.05f),
+            new Def("Mil_GrassDry", "#5E6440", 0f, 0.05f),
+            new Def("Mil_RoadWhite", "#E6E8EA", 0f, 0.2f),
+            new Def("Mil_Wood", "#5C4733", 0f, 0.1f),
+            new Def("Mil_PaintSteelBlue", "#3D5568", 0.4f, 0.4f),
         };
 
         public static int GenerateAll()

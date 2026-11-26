@@ -42,3 +42,10 @@ Elle Play'de ayrıca: seçim + bilgi sayfası + Kapat (02.5'te yeniden doğrulan
 
 ## Eksikler / sonraki
 Topla/İptal toast'ının elle görsel doğrulaması (B-008); gerçek cihaz/Android FPS ve bellek ölçümü (yapılmadı); tekrar ödül/satın alma/etkinlik testleri sonraki fazlarda.
+
+
+## PHASE 02.5 güncellemesi (ölçüldü, 2026-11-26)
+- EditMode: 140/140 geçti (kademe, kamera yapılandırması, grafik profilleri, ikon/Referans doğrulayıcıları dahil).
+- PlayMode: 14/14 geçti — `Phase025PlayModeTests`: grafik kalitesi kaydı (3 seviye), Ayarlar paneli dişliden açılır/kapanır, HUD dişlisi, bina önizleme render + ortalama regresyonu, kamera zoom aralığı.
+- `Phase025ScreenshotTests` ([Explicit], Run All'a girmez): Game görünümü Portrait 1080x1920 iken 8 ekran görüntüsünü `Docs/Screenshots/Phase025/` altına yazar.
+- Hâlâ elle/cihazda: Android FPS/RAM, Safe Area, kademe 2–7 görsel kontrolü, ışık/probe bake.

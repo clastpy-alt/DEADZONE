@@ -2,29 +2,35 @@ using Deadzone.Buildings;
 using Deadzone.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Deadzone.UI
 {
-    /// <summary>Binds the commander header (name, level, power, VIP), the save button and the profile popup.</summary>
+    /// <summary>Binds the commander header (name, level, power, VIP), the settings button and the profile popup. Saving is automatic (timer, pause, quit, every construction); a manual save lives in the settings panel.</summary>
     public sealed class HudController : MonoBehaviour
     {
         [SerializeField] private TMP_Text playerNameText;
         [SerializeField] private TMP_Text levelText;
         [SerializeField] private TMP_Text powerText;
         [SerializeField] private TMP_Text vipText;
-        [SerializeField] private Button saveButton;
+        [FormerlySerializedAs("saveButton")]
+        [SerializeField] private Button settingsButton;
+        [SerializeField] private TMP_Text levelBadgeText;
         [SerializeField] private Button avatarButton;
 
-        public void Bind(TMP_Text nameText, TMP_Text level, TMP_Text power, TMP_Text vip, Button save, Button avatar)
+        public void Bind(TMP_Text nameText, TMP_Text level, TMP_Text power, TMP_Text vip, Button settings, Button avatar)
         {
             playerNameText = nameText;
             levelText = level;
             powerText = power;
             vipText = vip;
-            saveButton = save;
+            settingsButton = settings;
             avatarButton = avatar;
         }
+
+        /// <summary>Optional: number shown on the level badge of the avatar (PHASE 02.5 premium HUD).</summary>
+        public void BindLevelBadge(TMP_Text badgeText) => levelBadgeText = badgeText;
 
         private void OnEnable()
         {
@@ -36,7 +42,7 @@ namespace Deadzone.UI
             GameEvents.LanguageChanged += Refresh;
             GameEvents.GameSaved += OnGameSaved;
             GameEvents.ConstructionCompleted += OnConstructionCompleted;
-            if (saveButton != null) saveButton.onClick.AddListener(OnSaveClicked);
+            if (settingsButton != null) settingsButton.onClick.AddListener(OnSettingsClicked);
             if (avatarButton != null) avatarButton.onClick.AddListener(OnAvatarClicked);
 
             Refresh();
@@ -49,7 +55,7 @@ namespace Deadzone.UI
             GameEvents.LanguageChanged -= Refresh;
             GameEvents.GameSaved -= OnGameSaved;
             GameEvents.ConstructionCompleted -= OnConstructionCompleted;
-            if (saveButton != null) saveButton.onClick.RemoveListener(OnSaveClicked);
+            if (settingsButton != null) settingsButton.onClick.RemoveListener(OnSettingsClicked);
             if (avatarButton != null) avatarButton.onClick.RemoveListener(OnAvatarClicked);
         }
 
@@ -72,7 +78,7 @@ namespace Deadzone.UI
             return string.Format(Loc.T("cq.done"), name, level);
         }
 
-        private void OnSaveClicked() => Game.Save(true);
+        private void OnSettingsClicked() => SettingsPanel.Open();
 
         private void OnGameSaved(bool manual)
         {
@@ -106,6 +112,7 @@ namespace Deadzone.UI
             if (player == null) return;
 
             if (playerNameText != null) playerNameText.text = player.playerName;
+            if (levelBadgeText != null) levelBadgeText.text = player.commanderLevel.ToString();
             if (levelText != null) levelText.text = $"{Loc.T("hud.level")} {player.commanderLevel}";
             if (powerText != null) powerText.text = $"{Loc.T("hud.power")}: {NumberFormatter.Compact(player.combatPower)}";
             if (vipText != null) vipText.text = $"VIP {player.vipLevel}";

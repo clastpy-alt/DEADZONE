@@ -66,3 +66,7 @@ Her ölçüm yapıldığında bu tabloya tarih, cihaz modeli, Android sürümü,
 1. Varlık bütçeyi aşıyorsa: önce sıkıştır / LOD ekle / paylaş.
 2. Hâlâ aşıyorsa: kullanıcıya bildir, alternatif sun (düşük poli, atlas, Addressables).
 3. Kullanıcı onayı olmadan bütçe değiştirilmez.
+
+
+## 7. PHASE 02.5 statik analiz (PERFORMANCE_REPORT.md, editör; cihaz ölçümü DEĞİL)
+Assets/_Game kaynak boyutu 15,2 MB (bütçe 3000 MB). Base sahnesi: 593 aktif MeshRenderer, 191.676 üçgen (LOD0, tüm katmanlar), 51 materyal. Draw call/FPS/RAM: ÖLÇÜLMEDİ. Low/Medium/High ayarları (hedef 30/45/60 FPS, LOD bias 0,7/1,0/1,4) uygulanır ama hedefler cihazda doğrulanmadı.

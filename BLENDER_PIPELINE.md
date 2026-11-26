@@ -43,3 +43,7 @@ Read/Write kapalı, Generate Colliders kapalı (collider'ı kodla/prefabda ekler
 
 ## 6. Mevcut modellerin korunması
 Bina kimlikleri, seviyeler, kayıtlar, collider ve `BuildingSelectable` seçimi DEĞİŞMEZ. Yeni görsel model, mevcut bina prefab kökü altında yeni bir `Visual` alt nesnesi olarak yerleştirilir; eski primitif görsel yalnız yeni model doğrulandıktan sonra devre dışı bırakılır (silinmez).
+
+
+## Durum (PHASE 02.5 sonu)
+Blender hâlâ kullanılmadı; tüm modeller Unity içinde prosedürel üretildi. Kurulum yalnız kullanıcı onayıyla.

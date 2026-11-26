@@ -72,5 +72,22 @@ namespace Deadzone.Tests
             Assert.Greater(Float("selectionDistance"), 0f);
             Assert.Greater(Float("cameraDistance"), 0f);
         }
+
+        [Test]
+        public void StartView_IsWideEnoughForTheWholeBase()
+        {
+            Assert.GreaterOrEqual(Float("startZoom"), 24f);
+        }
+
+        [Test]
+        public void BuildingFocus_IsWithinZoomRangeAndLiftsBuildingAboveSheet()
+        {
+            float zoom = Float("selectionZoom");
+            Assert.GreaterOrEqual(zoom, Float("minZoom"));
+            Assert.LessOrEqual(zoom, Float("startZoom"), "Selecting a building must approach, never zoom out.");
+            Assert.That(Float("selectionScreenLift"), Is.InRange(0.05f, 0.4f));
+            Assert.IsTrue(serialized.FindProperty("focusOnSelect").boolValue);
+            Assert.Greater(Float("panInertia"), 0f);
+        }
     }
 }
