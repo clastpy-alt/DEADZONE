@@ -1,3 +1,4 @@
+using Deadzone.Buildings;
 using Deadzone.Core;
 using TMPro;
 using UnityEngine;
@@ -31,8 +32,10 @@ namespace Deadzone.UI
             Game.SetState(GameState.Base);
 
             GameEvents.PlayerProfileChanged += Refresh;
+            GameEvents.PowerChanged += Refresh;
             GameEvents.LanguageChanged += Refresh;
             GameEvents.GameSaved += OnGameSaved;
+            GameEvents.ConstructionCompleted += OnConstructionCompleted;
             if (saveButton != null) saveButton.onClick.AddListener(OnSaveClicked);
             if (avatarButton != null) avatarButton.onClick.AddListener(OnAvatarClicked);
 
@@ -42,8 +45,10 @@ namespace Deadzone.UI
         private void OnDisable()
         {
             GameEvents.PlayerProfileChanged -= Refresh;
+            GameEvents.PowerChanged -= Refresh;
             GameEvents.LanguageChanged -= Refresh;
             GameEvents.GameSaved -= OnGameSaved;
+            GameEvents.ConstructionCompleted -= OnConstructionCompleted;
             if (saveButton != null) saveButton.onClick.RemoveListener(OnSaveClicked);
             if (avatarButton != null) avatarButton.onClick.RemoveListener(OnAvatarClicked);
         }
@@ -53,6 +58,14 @@ namespace Deadzone.UI
         private void OnGameSaved(bool manual)
         {
             if (manual) ToastView.Show(Loc.T("hud.saved"));
+        }
+
+        /// <summary>Completion notification (also fires for constructions that finished while the game was closed).</summary>
+        private void OnConstructionCompleted(string buildingId, int level)
+        {
+            BuildingDefinition definition = Game.Buildings != null ? Game.Buildings.GetDefinition(buildingId) : null;
+            string name = definition != null ? Loc.T(definition.nameKey) : buildingId;
+            ToastView.Show(string.Format(Loc.T("cq.done"), name, level));
         }
 
         private void OnAvatarClicked()

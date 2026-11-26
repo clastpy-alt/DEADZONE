@@ -42,7 +42,13 @@ namespace Deadzone.EditorTools
                 else Fail("Package missing: " + package + " (Window > Package Manager)");
             }
 
-            if (manifest.Contains("\"com.unity.test-framework\"")) Ok("Package com.unity.test-framework");
+            // The Test Framework can arrive as a transitive dependency, so ask the Package Manager, not the manifest.
+            bool testFramework = false;
+            foreach (UnityEditor.PackageManager.PackageInfo package in UnityEditor.PackageManager.PackageInfo.GetAllRegisteredPackages())
+            {
+                if (package.name == "com.unity.test-framework") { testFramework = true; break; }
+            }
+            if (testFramework) Ok("Package com.unity.test-framework");
             else Warn("Package com.unity.test-framework is not installed: EditMode tests will not compile/run until it is added (Package Manager > Unity Registry > Test Framework).");
 
             RenderPipelineAsset pipeline = GraphicsSettings.currentRenderPipeline;
@@ -95,7 +101,7 @@ namespace Deadzone.EditorTools
                 UIPrefabGenerator.RewardPopupPath, UIPrefabGenerator.TooltipPath, UIPrefabGenerator.LoadingScreenPath,
                 UIPrefabGenerator.ProgressBarPath, UIPrefabGenerator.NotificationBadgePath, UIPrefabGenerator.TabNavigationPath,
                 UIPrefabGenerator.ScrollablePanelPath, UIPrefabGenerator.SafeAreaControllerPath, UIPrefabGenerator.HeroCardPath,
-                UIPrefabGenerator.ItemCardPath, UIPrefabGenerator.EventCardPath, UIPrefabGenerator.ShopCardPath, UIPrefabGenerator.UIOverlayPath
+                UIPrefabGenerator.ItemCardPath, UIPrefabGenerator.EventCardPath, UIPrefabGenerator.ShopCardPath, UIPrefabGenerator.UIOverlayPath, UIPrefabGenerator.ConstructionQueuePath
             };
             int missingUi = 0;
             foreach (string path in uiPrefabs)

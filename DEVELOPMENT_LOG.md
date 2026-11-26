@@ -108,3 +108,64 @@ PrimaryButton, SecondaryButton, IconButton, PopupPanel, ConfirmationDialog, Prog
 - Hero/Item/Event/Shop kartları yalnız UIGallery'de örnek verili; oyun içinde henüz kullanılmıyor (PHASE 03+).
 - PlayMode testi yok; gerçek cihaz performansı ölçülmedi; `git init` kullanıcıda.
 - Prefab/sahne düzeni görsel olarak doğrulanmadı (taşma/çakışma olabilir).
+
+
+---
+
+## Oturum 3 — 2026-11-26 (PHASE 01.6: Unity entegrasyonu ve hata ayıklama)
+
+Bu oturumda Unity 6000.6.10f1 Editor'ü kullanıcının bilgisayarında bizzat çalıştırıldı.
+
+### Yapılanlar / sonuçlar
+1. GitHub: clastpy-alt/DEADZONE main, 2b8c291 push edildi (GitHub Desktop, kullanıcı telefon onayıyla).
+2. Derleme: tek hata CS0122 (`EditorPaths` erişilemez, UiReferenceValidationTests.cs) -> test dosyasında yerel sabit yol kullanıldı. Sonrasında 0 hata.
+3. Test Framework: Test Runner mevcut; 39 test listeleniyor.
+4. TextMeshPro: Window > TextMeshPro > Import TMP Essential Resources ile içe aktarıldı, Setup Phase 01 yeniden çalıştırıldı.
+5. Setup Phase 01: Bootstrap, MainMenu, Base, WorldMap, Battle, UIGallery sahneleri oluştu. Validate Project: 0 hata, 1 uyarı (içeriği okunmadı).
+6. Validate References: 'No problems found'.
+7. EditMode: 39/39 geçti. Test silinmedi, devre dışı bırakılmadı.
+8. Play: Bootstrap -> MainMenu ('Oyna', 'Yeni Oyun', 'Dil: Türkçe') -> Base. Üst bar, 6 kaynak sayacı, kilitli yan/alt butonlar, Türkçe karakterler (İnşaat, Araştırma, İttifak, Mağaza...) düzgün. Bina seçimi (Hastane, Seviye 1/35) ve 'Geliştir' bilgi toast'ı çalıştı; kamera sürükleme + zoom çalıştı; avatar -> 'Komutan Profili' penceresi açılıp kapandı; Kaydet düğmesi hata vermedi.
+9. Kayıt kalıcılığı: ilk Play 'Save load outcome: CreatedNew' logladı; durdurup yeniden başlatınca bu log çıkmadı (Game.cs yalnız Loaded dışı sonuçlarda loglar) -> kayıt yüklendi.
+10. Play sırasında Console'da hata yok; yalnız TMP Ellipsis uyarıları.
+
+### Doğrulanmayan
+Yeni Oyun onay penceresi, dil değiştirme (EN), tooltip, UIGallery, kilitli butona dokunma geri bildirimi, 1080x1920 portre yerleşim, gerçek cihaz/dokunma, kaynak değişimi sonrası kayıt (kaynak oynanışı yok), Validate Project uyarısının içeriği.
+
+### Bilinen sorunlar
+- TMP 'Ellipsis' uyarıları (bkz. TASK_STATUS.md); kozmetik.
+- İlk TMP içe aktarımında tek seferlik 'Essential Resources are missing' hatası; tekrarlamadı.
+- LiberationSans.ttf.meta importer sürüm uyarısı (kozmetik).
+- Proje OneDrive içinde; Library/Temp senkron sorunu riski.
+
+### PHASE 02 hazırlığı
+Derleme hatası yok, ilk oynanabilir prototip (menü -> üs -> bina seçimi -> kayıt) doğrulandı. Yukarıdaki 'doğrulanmayan' maddeler PHASE 02 öncesi kısa manuel kontrol olarak önerilir; engelleyici değil.
+
+
+---
+
+## Oturum 4 — 2026-11-26 (PHASE 02: Askerî Üs ve Ekonomi, v0.2.0)
+
+### Yapılanlar
+1. **Veri modeli** (Scripts/Buildings): BuildingDefinition (SO), BuildingDatabase (SO, `Validate()`), BuildingLevelData, BuildingProductionData, BuildingRequirement, BuildingBalanceCurve (maliyet/süre/güç/üretim/depolama formülleri), BuildingInstanceData, ConstructionJobData. 22 tür; azami seviye 35.
+2. **Servisler**: `BuildingManager` (örnekler, üretim, Topla, kapasite bonusu, güç yeniden hesabı, geri gitmeyen `Now()`), `BuildingUpgradeService` (CheckUpgrade/TryStartUpgrade/Cancel/ApplySpeedup/TryInstantFinish/CompleteFinished), `PlayerPower`, `IGameClock`/`SystemGameClock`. `Game` ve `GameRuntime` bunları başlatır, tick eder ve çevrimdışı tamamlanmayı yükleme sonrası çalıştırır.
+3. **Kayıt V2**: `SaveService.CurrentVersion = 2`; `SaveMigration.Migrate` (v1→v2: başlangıç binaları L1, zaman damgaları; kaynaklar değişmez) ve `Sanitize`. Kayıt/yedek silinmez, v1 karantinaya alınmaz.
+4. **UI**: yeniden yazılan `BuildingInfoPanel` (mevcut/sonraki seviye farkları, maliyet kırmızı/yeşil, gereksinimler, neden, Topla/Bilgi/Geliştir), yeni `ConstructionQueuePanel` (ilerleme, Hızlandır, İptal; onaylı), HUD güç göstergesi ve tamamlanma toast'ı, 6 yeni Loc anahtarı, kamera startZoom 14→22, toast konumu.
+5. **Ortam**: `MilitaryBaseGenerator` — bina detayları (`Details_PH`) ve "Military Base Props [PLACEHOLDER]" grubu; yalnız Unity primitifleri.
+6. **Editor**: `BuildingDatabaseGenerator`, `Phase02Setup`, `Phase02Validators`, `UIPrefabGenerator.Buildings`, `BuildingUiTools.PatchBaseScene`, DeadzoneMenu girdileri (Setup Phase 02, Generate Building Database/Level Data/UI/Military Base, Validate Buildings/Economy/Save Migration). Hepsi idempotent; mevcut sahne/prefab/asset korunur.
+7. **Testler**: 66 yeni EditMode testi (TestWorld ortak düzeni + FakeClock). Test Runner: **105/105 geçti**.
+8. **Dokümanlar**: ECONOMY_BALANCE, TEST_PLAN, ASSET_REGISTER, BUG_TRACKER, TASK_STATUS, NEXT_TASK, ARCHITECTURE, KURULUM güncellendi.
+
+### Unity'de doğrulananlar
+Derleme 0 hata; Validate Buildings/Economy/Save Migration/References temiz; EditMode 105/105; Play (1080x1920): seçim, bilgi sayfası, yükseltme akışı (güç 335→433→466), HQ gereksinimi, Bilgi penceresi, İnşaat penceresi, İptal (%80 iade), Hızlandır (1 Elmas), Topla, kayıt kalıcılığı. Console'da 0 hata.
+
+### Karşılaşılan sorunlar ve çözümler
+- CS0618/CS0619 (BuildingWorldLabel/HudFeature eski API) → düzeltildi.
+- Bilgi sayfası yerleşim çakışması ve toast gizlenmesi → yeni ofsetler + `layoutVersion` ile eski sahneyi otomatik yenileme.
+- Cihaza yazılan dosyanın eski kopya olması (BuildingInfoPanel boyut farkı) → düzenlemeden sonra birkaç sn bekle, boyutu `device_list_dir` ile doğrula.
+- Menü otomasyonunda modal "No problems found" pencereleri tıklamayı engelledi → OK ile kapatıldı.
+
+### Bilinen eksikler
+Bkz. BUG_TRACKER.md (B-005…B-012) ve ECONOMY_BALANCE.md §7–8: çevrimdışı tamamlanma toast'ı, otomatik PlayMode testi, Safe Area cihaz testi, L18 üstü maliyet/kapasite dengesi, yerel saat ileri alma sınırı.
+
+### Sonraki
+PHASE 03'e yalnızca kullanıcı komutuyla geçilir (NEXT_TASK.md).

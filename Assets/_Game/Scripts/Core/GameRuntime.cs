@@ -7,6 +7,7 @@ namespace Deadzone.Core
     {
         private static GameRuntime instance;
         private float timer;
+        private float tickTimer;
 
         public static AudioService Audio { get; private set; }
 
@@ -24,6 +25,13 @@ namespace Deadzone.Core
         {
             if (!Game.IsInitialized) return;
 
+            tickTimer += Time.unscaledDeltaTime;
+            if (tickTimer >= Game.Config.tickIntervalSeconds)
+            {
+                tickTimer = 0f;
+                Game.Tick();
+            }
+
             timer += Time.unscaledDeltaTime;
             if (timer >= Game.Config.autosaveIntervalSeconds)
             {
@@ -34,7 +42,9 @@ namespace Deadzone.Core
 
         private void OnApplicationPause(bool paused)
         {
-            if (paused && Game.IsInitialized) Game.Save(false);
+            if (!Game.IsInitialized) return;
+            if (paused) Game.Save(false);
+            else Game.Tick(); // resumed: catch up on production and finished constructions
         }
 
         private void OnApplicationQuit()

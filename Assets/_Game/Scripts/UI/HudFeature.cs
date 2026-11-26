@@ -17,7 +17,7 @@ namespace Deadzone.UI
     {
         public static bool IsAvailable(HudFeature feature)
         {
-            return feature == HudFeature.Base;
+            return feature == HudFeature.Base || feature == HudFeature.ConstructionQueue;
         }
 
         public static string NameKey(HudFeature feature)
@@ -56,8 +56,11 @@ namespace Deadzone.UI
             switch (feature)
             {
                 case HudFeature.Base:
-                    var camera = UnityEngine.Object.FindFirstObjectByType<IsometricCameraController>();
+                    var camera = UnityEngine.Object.FindAnyObjectByType<IsometricCameraController>();
                     if (camera != null) camera.ResetView();
+                    break;
+                case HudFeature.ConstructionQueue:
+                    ConstructionQueuePanel.Open();
                     break;
             }
         }

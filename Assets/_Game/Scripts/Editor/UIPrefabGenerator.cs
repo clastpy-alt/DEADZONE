@@ -26,6 +26,7 @@ namespace Deadzone.EditorTools
             SavePrefab(IconButtonPath, overwrite, BuildIconButton);
             SavePrefab(ResourceCounterPath, overwrite, BuildResourceCounter);
             GenerateComponents(overwrite);
+            GenerateBuildingUi(overwrite);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

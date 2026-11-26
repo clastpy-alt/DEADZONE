@@ -7,7 +7,7 @@ namespace Deadzone.Core
     /// Localization foundation (TR / EN). Each entry is { turkish, english }.
     /// Adding a language = add an enum value and a column; FindIncompleteKeys() reports gaps.
     /// </summary>
-    public static class Loc
+    public static partial class Loc
     {
         private static readonly Dictionary<string, string[]> Table = new Dictionary<string, string[]>
         {
@@ -94,7 +94,7 @@ namespace Deadzone.Core
         {
             if (string.IsNullOrEmpty(key)) return string.Empty;
 
-            if (Table.TryGetValue(key, out string[] values))
+            if (TryGetValues(key, out string[] values))
             {
                 int index = (int)Current;
                 if (index < values.Length && !string.IsNullOrEmpty(values[index])) return values[index];
@@ -103,10 +103,17 @@ namespace Deadzone.Core
             return key;
         }
 
+        private static bool TryGetValues(string key, out string[] values)
+        {
+            return Table.TryGetValue(key, out values) || BuildingTable.TryGetValue(key, out values);
+        }
+
+        public static bool Has(string key) => !string.IsNullOrEmpty(key) && (Table.ContainsKey(key) || BuildingTable.ContainsKey(key));
+
         public static IEnumerable<string> FindIncompleteKeys()
         {
             int languageCount = System.Enum.GetValues(typeof(Language)).Length;
-            foreach (KeyValuePair<string, string[]> pair in Table)
+            foreach (KeyValuePair<string, string[]> pair in AllEntries())
             {
                 bool incomplete = pair.Value.Length < languageCount;
                 for (int i = 0; !incomplete && i < languageCount; i++)
@@ -115,6 +122,12 @@ namespace Deadzone.Core
                 }
                 if (incomplete) yield return pair.Key;
             }
+        }
+
+        private static IEnumerable<KeyValuePair<string, string[]>> AllEntries()
+        {
+            foreach (KeyValuePair<string, string[]> pair in Table) yield return pair;
+            foreach (KeyValuePair<string, string[]> pair in BuildingTable) yield return pair;
         }
     }
 }

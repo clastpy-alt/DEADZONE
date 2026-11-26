@@ -160,6 +160,9 @@ namespace Deadzone.EditorTools
             instance.transform.position = position;
         }
 
+        /// <summary>The toast sits just above the building info sheet (216 + 900 + gap).</summary>
+        public const float ToastBottomOffset = 1140f;
+
         private static void BuildHud()
         {
             Canvas canvas = CreateCanvas("HUD Canvas");
@@ -240,28 +243,11 @@ namespace Deadzone.EditorTools
                 ConfigureIconButton(button, items[i]);
             }
 
-            // ---- Building info panel
-            RectTransform infoRoot = UIFactory.Rect("BuildingInfoPanel", safe);
-            UIFactory.Place(infoRoot, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), new Vector2(0, 216), new Vector2(-48, 230));
-            Image content = UIFactory.Panel("Content", infoRoot, UIColors.WithAlpha(UIColors.Panel, 0.96f));
-            UIFactory.Stretch(content.rectTransform);
-            UIFactory.AddOutline(content, UIColors.Gold, 3f);
+            // ---- Building info sheet (PHASE 02) and construction queue window
+            UIPrefabGenerator.BuildInfoPanelUi(safe);
+            UIPrefabGenerator.Instantiate(UIPrefabGenerator.ConstructionQueuePath, canvas.transform);
 
-            TextMeshProUGUI buildingName = UIFactory.Text("BuildingName", content.transform, "-", 44f, UIColors.TextPrimary, TextAlignmentOptions.Left, FontStyles.Bold);
-            UIFactory.Place(buildingName.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(28, -24), new Vector2(560, 60));
-            TextMeshProUGUI buildingLevel = UIFactory.Text("BuildingLevel", content.transform, "-", 34f, UIColors.TextSecondary, TextAlignmentOptions.Left);
-            UIFactory.Place(buildingLevel.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(28, -92), new Vector2(560, 46));
-
-            GameObject upgrade = UIPrefabGenerator.Instantiate(UIPrefabGenerator.PrimaryButtonPath, content.transform);
-            upgrade.name = "UpgradeButton";
-            UIFactory.Place((RectTransform)upgrade.transform, new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-24, 0), new Vector2(300, 110));
-            upgrade.GetComponentInChildren<LocalizedText>().SetKey("building.upgrade");
-
-            var infoPanel = infoRoot.gameObject.AddComponent<BuildingInfoPanel>();
-            infoPanel.Bind(content.gameObject, buildingName, buildingLevel, upgrade.GetComponent<Button>());
-            content.gameObject.SetActive(false);
-
-            CreateToast(safe, 470f);
+            CreateToast(safe, ToastBottomOffset);
 
             // ---- HUD controller
             var hud = new GameObject("HudController").AddComponent<HudController>();

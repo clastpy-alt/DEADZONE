@@ -11,8 +11,10 @@ namespace Deadzone.EditorTools
         public const string PrefabsBuildings = Root + "/Prefabs/Buildings";
         public const string PrefabsUI = Root + "/Prefabs/UI";
         public const string Resources = Root + "/Resources";
+        public const string BuildingData = Root + "/ScriptableObjects/Buildings";
 
         public const string GameConfigAsset = Resources + "/GameConfig.asset";
+        public const string BuildingDatabaseAsset = Resources + "/BuildingDatabase.asset";
 
         public static string ScenePath(string sceneName) => Scenes + "/" + sceneName + ".unity";
 

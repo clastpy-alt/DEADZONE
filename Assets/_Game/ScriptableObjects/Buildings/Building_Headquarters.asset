@@ -1,0 +1,499 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269525840687987498bc3a9135f11c3b, type: 3}
+  m_Name: Building_Headquarters
+  m_EditorClassIdentifier: Deadzone.Runtime::Deadzone.Buildings.BuildingDefinition
+  buildingId: headquarters
+  type: 0
+  category: 0
+  availability: 0
+  nameKey: building.hq
+  descriptionKey: building.hq.desc
+  iconLabel: HQ
+  accentColor: {r: 0.27450982, g: 0.34117648, b: 0.26666668, a: 1}
+  maxLevel: 35
+  unlockHeadquartersLevel: 1
+  production:
+    producesResource: 0
+    resource: 0
+    storageIsGlobal: 0
+  prefab: {fileID: 7294178600675251170, guid: 81ffb930aa5b1b04cb18f033f2458b1f, type: 3}
+  icon: {fileID: 0}
+  balance:
+    baseCost:
+    - type: 2
+      amount: 400
+    - type: 1
+      amount: 300
+    - type: 4
+      amount: 80
+    costGrowth: 1.4
+    firstDurationsSeconds: 1e000000780000002c01000084030000i
+    durationGrowth: 1.25
+    durationMultiplier: 1
+    powerBase: 120
+    powerExponent: 1.4
+    productionBase: 0
+    productionGrowth: 1.18
+    storageBase: 0
+    storageGrowth: 1.2
+    hqLevelOffset: 1
+  levels:
+  - level: 1
+    upgradeCost: []
+    upgradeDurationSeconds: 0
+    powerContribution: 120
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 2
+    upgradeCost:
+    - type: 2
+      amount: 400
+    - type: 1
+      amount: 300
+    - type: 4
+      amount: 80
+    upgradeDurationSeconds: 30
+    powerContribution: 317
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 3
+    upgradeCost:
+    - type: 2
+      amount: 560
+    - type: 1
+      amount: 420
+    - type: 4
+      amount: 110
+    upgradeDurationSeconds: 120
+    powerContribution: 559
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 4
+    upgradeCost:
+    - type: 2
+      amount: 780
+    - type: 1
+      amount: 590
+    - type: 4
+      amount: 160
+    upgradeDurationSeconds: 300
+    powerContribution: 836
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 5
+    upgradeCost:
+    - type: 2
+      amount: 1100
+    - type: 1
+      amount: 820
+    - type: 4
+      amount: 220
+    upgradeDurationSeconds: 900
+    powerContribution: 1142
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 6
+    upgradeCost:
+    - type: 2
+      amount: 1540
+    - type: 1
+      amount: 1150
+    - type: 4
+      amount: 310
+    upgradeDurationSeconds: 1125
+    powerContribution: 1474
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 7
+    upgradeCost:
+    - type: 2
+      amount: 2150
+    - type: 1
+      amount: 1610
+    - type: 4
+      amount: 430
+    upgradeDurationSeconds: 1406
+    powerContribution: 1829
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 8
+    upgradeCost:
+    - type: 2
+      amount: 3010
+    - type: 1
+      amount: 2260
+    - type: 4
+      amount: 600
+    upgradeDurationSeconds: 1758
+    powerContribution: 2206
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 9
+    upgradeCost:
+    - type: 2
+      amount: 4220
+    - type: 1
+      amount: 3160
+    - type: 4
+      amount: 840
+    upgradeDurationSeconds: 2197
+    powerContribution: 2601
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 10
+    upgradeCost:
+    - type: 2
+      amount: 5900
+    - type: 1
+      amount: 4430
+    - type: 4
+      amount: 1180
+    upgradeDurationSeconds: 2747
+    powerContribution: 3014
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 11
+    upgradeCost:
+    - type: 2
+      amount: 8260
+    - type: 1
+      amount: 6200
+    - type: 4
+      amount: 1650
+    upgradeDurationSeconds: 3433
+    powerContribution: 3445
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 12
+    upgradeCost:
+    - type: 2
+      amount: 11570
+    - type: 1
+      amount: 8680
+    - type: 4
+      amount: 2310
+    upgradeDurationSeconds: 4292
+    powerContribution: 3891
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 13
+    upgradeCost:
+    - type: 2
+      amount: 16200
+    - type: 1
+      amount: 12150
+    - type: 4
+      amount: 3240
+    upgradeDurationSeconds: 5364
+    powerContribution: 4352
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 14
+    upgradeCost:
+    - type: 2
+      amount: 22680
+    - type: 1
+      amount: 17010
+    - type: 4
+      amount: 4540
+    upgradeDurationSeconds: 6706
+    powerContribution: 4828
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 15
+    upgradeCost:
+    - type: 2
+      amount: 31750
+    - type: 1
+      amount: 23810
+    - type: 4
+      amount: 6350
+    upgradeDurationSeconds: 8382
+    powerContribution: 5318
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 16
+    upgradeCost:
+    - type: 2
+      amount: 44450
+    - type: 1
+      amount: 33340
+    - type: 4
+      amount: 8890
+    upgradeDurationSeconds: 10477
+    powerContribution: 5820
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 17
+    upgradeCost:
+    - type: 2
+      amount: 62230
+    - type: 1
+      amount: 46670
+    - type: 4
+      amount: 12450
+    upgradeDurationSeconds: 13097
+    powerContribution: 6336
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 18
+    upgradeCost:
+    - type: 2
+      amount: 87120
+    - type: 1
+      amount: 65340
+    - type: 4
+      amount: 17420
+    upgradeDurationSeconds: 16371
+    powerContribution: 6864
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 19
+    upgradeCost:
+    - type: 2
+      amount: 121970
+    - type: 1
+      amount: 91470
+    - type: 4
+      amount: 24390
+    upgradeDurationSeconds: 20464
+    powerContribution: 7403
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 20
+    upgradeCost:
+    - type: 2
+      amount: 170750
+    - type: 1
+      amount: 128060
+    - type: 4
+      amount: 34150
+    upgradeDurationSeconds: 25580
+    powerContribution: 7955
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 21
+    upgradeCost:
+    - type: 2
+      amount: 239050
+    - type: 1
+      amount: 179290
+    - type: 4
+      amount: 47810
+    upgradeDurationSeconds: 31974
+    powerContribution: 8517
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 22
+    upgradeCost:
+    - type: 2
+      amount: 334670
+    - type: 1
+      amount: 251010
+    - type: 4
+      amount: 66940
+    upgradeDurationSeconds: 39968
+    powerContribution: 9090
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 23
+    upgradeCost:
+    - type: 2
+      amount: 468540
+    - type: 1
+      amount: 351410
+    - type: 4
+      amount: 93710
+    upgradeDurationSeconds: 49960
+    powerContribution: 9674
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 24
+    upgradeCost:
+    - type: 2
+      amount: 655960
+    - type: 1
+      amount: 491970
+    - type: 4
+      amount: 131190
+    upgradeDurationSeconds: 62450
+    powerContribution: 10268
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 25
+    upgradeCost:
+    - type: 2
+      amount: 918340
+    - type: 1
+      amount: 688760
+    - type: 4
+      amount: 183670
+    upgradeDurationSeconds: 78063
+    powerContribution: 10872
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 26
+    upgradeCost:
+    - type: 2
+      amount: 1285680
+    - type: 1
+      amount: 964260
+    - type: 4
+      amount: 257140
+    upgradeDurationSeconds: 97578
+    powerContribution: 11485
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 27
+    upgradeCost:
+    - type: 2
+      amount: 1799950
+    - type: 1
+      amount: 1349960
+    - type: 4
+      amount: 359990
+    upgradeDurationSeconds: 121973
+    powerContribution: 12109
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 28
+    upgradeCost:
+    - type: 2
+      amount: 2519930
+    - type: 1
+      amount: 1889950
+    - type: 4
+      amount: 503990
+    upgradeDurationSeconds: 152466
+    powerContribution: 12741
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 29
+    upgradeCost:
+    - type: 2
+      amount: 3527900
+    - type: 1
+      amount: 2645930
+    - type: 4
+      amount: 705580
+    upgradeDurationSeconds: 190582
+    powerContribution: 13383
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 30
+    upgradeCost:
+    - type: 2
+      amount: 4939070
+    - type: 1
+      amount: 3704300
+    - type: 4
+      amount: 987810
+    upgradeDurationSeconds: 238228
+    powerContribution: 14033
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 31
+    upgradeCost:
+    - type: 2
+      amount: 6914690
+    - type: 1
+      amount: 5186020
+    - type: 4
+      amount: 1382940
+    upgradeDurationSeconds: 297785
+    powerContribution: 14692
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 32
+    upgradeCost:
+    - type: 2
+      amount: 9680570
+    - type: 1
+      amount: 7260430
+    - type: 4
+      amount: 1936110
+    upgradeDurationSeconds: 372231
+    powerContribution: 15360
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 33
+    upgradeCost:
+    - type: 2
+      amount: 13552800
+    - type: 1
+      amount: 10164600
+    - type: 4
+      amount: 2710560
+    upgradeDurationSeconds: 465289
+    powerContribution: 16036
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 34
+    upgradeCost:
+    - type: 2
+      amount: 18973910
+    - type: 1
+      amount: 14230430
+    - type: 4
+      amount: 3794780
+    upgradeDurationSeconds: 581611
+    powerContribution: 16721
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []
+  - level: 35
+    upgradeCost:
+    - type: 2
+      amount: 26563480
+    - type: 1
+      amount: 19922610
+    - type: 4
+      amount: 5312700
+    upgradeDurationSeconds: 727014
+    powerContribution: 17413
+    productionPerHour: 0
+    storageCapacity: 0
+    requirements: []

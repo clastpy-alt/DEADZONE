@@ -4,21 +4,21 @@ using UnityEngine;
 namespace Deadzone.Buildings
 {
     /// <summary>
-    /// Phase 01: selectable building marker with placeholder level data.
-    /// Phase 02 replaces level/maxLevel with data-driven definitions and saved state.
+    /// Selectable building in the Base scene. Identity (id, name key) is on the prefab; level, maximum level and
+    /// everything else come from the saved data and the BuildingDatabase at runtime.
     /// </summary>
     public sealed class BuildingSelectable : MonoBehaviour
     {
         [SerializeField] private string buildingId;
         [SerializeField] private string nameKey;
-        [SerializeField] private int level = 1;
         [SerializeField] private int maxLevel = 35;
         [SerializeField] private GameObject selectionRing;
 
         public string BuildingId => buildingId;
-        public string DisplayName => Loc.T(nameKey);
-        public int Level => level;
-        public int MaxLevel => maxLevel;
+        public BuildingDefinition Definition => Game.IsInitialized ? Game.Buildings.GetDefinition(buildingId) : null;
+        public string DisplayName => Loc.T(Definition != null ? Definition.nameKey : nameKey);
+        public int Level => Game.IsInitialized ? Game.Buildings.GetLevel(buildingId) : 1;
+        public int MaxLevel => Definition != null ? Definition.maxLevel : maxLevel;
 
         public void Configure(string id, string key, int max, GameObject ring)
         {
@@ -28,6 +28,8 @@ namespace Deadzone.Buildings
             selectionRing = ring;
             if (selectionRing != null) selectionRing.SetActive(false);
         }
+
+        private void Start() => BuildingWorldLabel.Attach(this);
 
         public void SetSelected(bool isSelected)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Deadzone.Data;
 using Deadzone.SaveSystem;
 
@@ -56,6 +57,32 @@ namespace Deadzone.Economy
 
             entry.amount -= amount;
             Changed?.Invoke(type, entry.amount);
+            return true;
+        }
+
+        /// <summary>True when every line can be paid at the same time. Invalid lines (amount <= 0) make it false.</summary>
+        public bool CanAffordAll(IReadOnlyList<ResourceAmount> costs)
+        {
+            if (costs == null || costs.Count == 0) return false;
+            var totals = new Dictionary<ResourceType, long>();
+            foreach (ResourceAmount cost in costs)
+            {
+                if (cost == null || cost.amount <= 0) return false;
+                totals.TryGetValue(cost.type, out long sum);
+                totals[cost.type] = sum + cost.amount;
+            }
+            foreach (KeyValuePair<ResourceType, long> pair in totals)
+            {
+                if (Get(pair.Key) < pair.Value) return false;
+            }
+            return true;
+        }
+
+        /// <summary>All-or-nothing payment: either every line is charged, or nothing is changed.</summary>
+        public bool TrySpendAll(IReadOnlyList<ResourceAmount> costs)
+        {
+            if (!CanAffordAll(costs)) return false;
+            foreach (ResourceAmount cost in costs) TrySpend(cost.type, cost.amount);
             return true;
         }
 

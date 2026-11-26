@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0f617efbfeda046a46e4e1bbdda050, type: 3}
+  m_Name: BuildingDatabase
+  m_EditorClassIdentifier: Deadzone.Runtime::Deadzone.Buildings.BuildingDatabase
+  definitions:
+  - {fileID: 11400000, guid: 9263648fbfb9ca248ae7c17b6d914ab1, type: 2}
+  - {fileID: 11400000, guid: 3023c1a416b10e74c83a6242c0199db2, type: 2}
+  - {fileID: 11400000, guid: 215940b50e681a041ba5bbb083f51949, type: 2}
+  - {fileID: 11400000, guid: 43c1c539c7e51b14094ae6ae92fb1af8, type: 2}
+  - {fileID: 11400000, guid: 3e9065b984a44934f8f576089278f2d4, type: 2}
+  - {fileID: 11400000, guid: afa4e6589175983439d85a3a015dda62, type: 2}
+  - {fileID: 11400000, guid: 57504db148f487b41bd9ac8a6c1045ef, type: 2}
+  - {fileID: 11400000, guid: 73d40ee59339a894ca173df1eee63f94, type: 2}
+  - {fileID: 11400000, guid: 6bf1173e8748c08419140ba2a22117ce, type: 2}
+  - {fileID: 11400000, guid: c69fa456fc68e1147adc5b277553607c, type: 2}
+  - {fileID: 11400000, guid: 732bd9d8f38458a47b221431d280b929, type: 2}
+  - {fileID: 11400000, guid: 190715b624264c0439bd651554613a55, type: 2}
+  - {fileID: 11400000, guid: d5de7cc820c43fc47999319c3d51c961, type: 2}
+  - {fileID: 11400000, guid: 11161253208dbad4bb9126f7e47b8952, type: 2}
+  - {fileID: 11400000, guid: a551dab61495fff408a1f18591e1ed25, type: 2}
+  - {fileID: 11400000, guid: e444e723001c2df4cb1a8b8ed02035c3, type: 2}
+  - {fileID: 11400000, guid: 4e27ebe441c6130448f9ac23edbdeb97, type: 2}
+  - {fileID: 11400000, guid: 6382d5246a0343149bb8155dd857c177, type: 2}
+  - {fileID: 11400000, guid: f29628fce84c47e4a9dcf7ef9083940a, type: 2}
+  - {fileID: 11400000, guid: cb4d6d76b77adf84bba8ba6eb6af2251, type: 2}
+  - {fileID: 11400000, guid: d5401fd4e79170e41bf2c408e04100de, type: 2}
+  - {fileID: 11400000, guid: ec1ccb42f1673594da4f2c508e80cd8f, type: 2}

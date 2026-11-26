@@ -1,0 +1,567 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269525840687987498bc3a9135f11c3b, type: 3}
+  m_Name: Building_SteelFactory
+  m_EditorClassIdentifier: Deadzone.Runtime::Deadzone.Buildings.BuildingDefinition
+  buildingId: steel_factory
+  type: 8
+  category: 1
+  availability: 0
+  nameKey: building.steel
+  descriptionKey: building.steel.desc
+  iconLabel: ST
+  accentColor: {r: 0.3529412, g: 0.37254903, b: 0.4, a: 1}
+  maxLevel: 35
+  unlockHeadquartersLevel: 1
+  production:
+    producesResource: 1
+    resource: 2
+    storageIsGlobal: 0
+  prefab: {fileID: 111364519086939995, guid: c548ba1c7578c274aadc59bc3bfd9d99, type: 3}
+  icon: {fileID: 0}
+  balance:
+    baseCost:
+    - type: 0
+      amount: 200
+    - type: 1
+      amount: 250
+    - type: 4
+      amount: 40
+    costGrowth: 1.4
+    firstDurationsSeconds: 1e000000780000002c01000084030000i
+    durationGrowth: 1.25
+    durationMultiplier: 1
+    powerBase: 25
+    powerExponent: 1.4
+    productionBase: 900
+    productionGrowth: 1.18
+    storageBase: 3000
+    storageGrowth: 1.2
+    hqLevelOffset: 1
+  levels:
+  - level: 1
+    upgradeCost: []
+    upgradeDurationSeconds: 0
+    powerContribution: 25
+    productionPerHour: 900
+    storageCapacity: 3000
+    requirements: []
+  - level: 2
+    upgradeCost:
+    - type: 0
+      amount: 200
+    - type: 1
+      amount: 250
+    - type: 4
+      amount: 40
+    upgradeDurationSeconds: 30
+    powerContribution: 66
+    productionPerHour: 1062
+    storageCapacity: 3600
+    requirements:
+    - buildingId: headquarters
+      level: 1
+  - level: 3
+    upgradeCost:
+    - type: 0
+      amount: 280
+    - type: 1
+      amount: 350
+    - type: 4
+      amount: 60
+    upgradeDurationSeconds: 120
+    powerContribution: 116
+    productionPerHour: 1253
+    storageCapacity: 4320
+    requirements:
+    - buildingId: headquarters
+      level: 2
+  - level: 4
+    upgradeCost:
+    - type: 0
+      amount: 390
+    - type: 1
+      amount: 490
+    - type: 4
+      amount: 80
+    upgradeDurationSeconds: 300
+    powerContribution: 174
+    productionPerHour: 1479
+    storageCapacity: 5184
+    requirements:
+    - buildingId: headquarters
+      level: 3
+  - level: 5
+    upgradeCost:
+    - type: 0
+      amount: 550
+    - type: 1
+      amount: 690
+    - type: 4
+      amount: 110
+    upgradeDurationSeconds: 900
+    powerContribution: 238
+    productionPerHour: 1745
+    storageCapacity: 6221
+    requirements:
+    - buildingId: headquarters
+      level: 4
+  - level: 6
+    upgradeCost:
+    - type: 0
+      amount: 770
+    - type: 1
+      amount: 960
+    - type: 4
+      amount: 150
+    upgradeDurationSeconds: 1125
+    powerContribution: 307
+    productionPerHour: 2059
+    storageCapacity: 7465
+    requirements:
+    - buildingId: headquarters
+      level: 5
+  - level: 7
+    upgradeCost:
+    - type: 0
+      amount: 1080
+    - type: 1
+      amount: 1350
+    - type: 4
+      amount: 220
+    upgradeDurationSeconds: 1406
+    powerContribution: 381
+    productionPerHour: 2430
+    storageCapacity: 8958
+    requirements:
+    - buildingId: headquarters
+      level: 6
+  - level: 8
+    upgradeCost:
+    - type: 0
+      amount: 1510
+    - type: 1
+      amount: 1880
+    - type: 4
+      amount: 300
+    upgradeDurationSeconds: 1758
+    powerContribution: 459
+    productionPerHour: 2867
+    storageCapacity: 10750
+    requirements:
+    - buildingId: headquarters
+      level: 7
+  - level: 9
+    upgradeCost:
+    - type: 0
+      amount: 2110
+    - type: 1
+      amount: 2640
+    - type: 4
+      amount: 420
+    upgradeDurationSeconds: 2197
+    powerContribution: 542
+    productionPerHour: 3383
+    storageCapacity: 12899
+    requirements:
+    - buildingId: headquarters
+      level: 8
+  - level: 10
+    upgradeCost:
+    - type: 0
+      amount: 2950
+    - type: 1
+      amount: 3690
+    - type: 4
+      amount: 590
+    upgradeDurationSeconds: 2747
+    powerContribution: 628
+    productionPerHour: 3992
+    storageCapacity: 15479
+    requirements:
+    - buildingId: headquarters
+      level: 9
+  - level: 11
+    upgradeCost:
+    - type: 0
+      amount: 4130
+    - type: 1
+      amount: 5170
+    - type: 4
+      amount: 830
+    upgradeDurationSeconds: 3433
+    powerContribution: 718
+    productionPerHour: 4710
+    storageCapacity: 18575
+    requirements:
+    - buildingId: headquarters
+      level: 10
+  - level: 12
+    upgradeCost:
+    - type: 0
+      amount: 5790
+    - type: 1
+      amount: 7230
+    - type: 4
+      amount: 1160
+    upgradeDurationSeconds: 4292
+    powerContribution: 811
+    productionPerHour: 5558
+    storageCapacity: 22290
+    requirements:
+    - buildingId: headquarters
+      level: 11
+  - level: 13
+    upgradeCost:
+    - type: 0
+      amount: 8100
+    - type: 1
+      amount: 10120
+    - type: 4
+      amount: 1620
+    upgradeDurationSeconds: 5364
+    powerContribution: 907
+    productionPerHour: 6559
+    storageCapacity: 26748
+    requirements:
+    - buildingId: headquarters
+      level: 12
+  - level: 14
+    upgradeCost:
+    - type: 0
+      amount: 11340
+    - type: 1
+      amount: 14170
+    - type: 4
+      amount: 2270
+    upgradeDurationSeconds: 6706
+    powerContribution: 1006
+    productionPerHour: 7739
+    storageCapacity: 32098
+    requirements:
+    - buildingId: headquarters
+      level: 13
+  - level: 15
+    upgradeCost:
+    - type: 0
+      amount: 15870
+    - type: 1
+      amount: 19840
+    - type: 4
+      amount: 3180
+    upgradeDurationSeconds: 8382
+    powerContribution: 1108
+    productionPerHour: 9133
+    storageCapacity: 38518
+    requirements:
+    - buildingId: headquarters
+      level: 14
+  - level: 16
+    upgradeCost:
+    - type: 0
+      amount: 22220
+    - type: 1
+      amount: 27780
+    - type: 4
+      amount: 4450
+    upgradeDurationSeconds: 10477
+    powerContribution: 1213
+    productionPerHour: 10776
+    storageCapacity: 46221
+    requirements:
+    - buildingId: headquarters
+      level: 15
+  - level: 17
+    upgradeCost:
+    - type: 0
+      amount: 31110
+    - type: 1
+      amount: 38890
+    - type: 4
+      amount: 6220
+    upgradeDurationSeconds: 13097
+    powerContribution: 1320
+    productionPerHour: 12716
+    storageCapacity: 55465
+    requirements:
+    - buildingId: headquarters
+      level: 16
+  - level: 18
+    upgradeCost:
+    - type: 0
+      amount: 43560
+    - type: 1
+      amount: 54450
+    - type: 4
+      amount: 8710
+    upgradeDurationSeconds: 16371
+    powerContribution: 1430
+    productionPerHour: 15005
+    storageCapacity: 66558
+    requirements:
+    - buildingId: headquarters
+      level: 17
+  - level: 19
+    upgradeCost:
+    - type: 0
+      amount: 60980
+    - type: 1
+      amount: 76230
+    - type: 4
+      amount: 12200
+    upgradeDurationSeconds: 20464
+    powerContribution: 1542
+    productionPerHour: 17706
+    storageCapacity: 79870
+    requirements:
+    - buildingId: headquarters
+      level: 18
+  - level: 20
+    upgradeCost:
+    - type: 0
+      amount: 85380
+    - type: 1
+      amount: 106720
+    - type: 4
+      amount: 17080
+    upgradeDurationSeconds: 25580
+    powerContribution: 1657
+    productionPerHour: 20893
+    storageCapacity: 95844
+    requirements:
+    - buildingId: headquarters
+      level: 19
+  - level: 21
+    upgradeCost:
+    - type: 0
+      amount: 119530
+    - type: 1
+      amount: 149410
+    - type: 4
+      amount: 23910
+    upgradeDurationSeconds: 31974
+    powerContribution: 1774
+    productionPerHour: 24654
+    storageCapacity: 115013
+    requirements:
+    - buildingId: headquarters
+      level: 20
+  - level: 22
+    upgradeCost:
+    - type: 0
+      amount: 167340
+    - type: 1
+      amount: 209170
+    - type: 4
+      amount: 33470
+    upgradeDurationSeconds: 39968
+    powerContribution: 1894
+    productionPerHour: 29091
+    storageCapacity: 138015
+    requirements:
+    - buildingId: headquarters
+      level: 21
+  - level: 23
+    upgradeCost:
+    - type: 0
+      amount: 234270
+    - type: 1
+      amount: 292840
+    - type: 4
+      amount: 46850
+    upgradeDurationSeconds: 49960
+    powerContribution: 2015
+    productionPerHour: 34328
+    storageCapacity: 165619
+    requirements:
+    - buildingId: headquarters
+      level: 22
+  - level: 24
+    upgradeCost:
+    - type: 0
+      amount: 327980
+    - type: 1
+      amount: 409970
+    - type: 4
+      amount: 65600
+    upgradeDurationSeconds: 62450
+    powerContribution: 2139
+    productionPerHour: 40507
+    storageCapacity: 198742
+    requirements:
+    - buildingId: headquarters
+      level: 23
+  - level: 25
+    upgradeCost:
+    - type: 0
+      amount: 459170
+    - type: 1
+      amount: 573960
+    - type: 4
+      amount: 91830
+    upgradeDurationSeconds: 78063
+    powerContribution: 2265
+    productionPerHour: 47798
+    storageCapacity: 238491
+    requirements:
+    - buildingId: headquarters
+      level: 24
+  - level: 26
+    upgradeCost:
+    - type: 0
+      amount: 642840
+    - type: 1
+      amount: 803550
+    - type: 4
+      amount: 128570
+    upgradeDurationSeconds: 97578
+    powerContribution: 2393
+    productionPerHour: 56402
+    storageCapacity: 286189
+    requirements:
+    - buildingId: headquarters
+      level: 25
+  - level: 27
+    upgradeCost:
+    - type: 0
+      amount: 899980
+    - type: 1
+      amount: 1124970
+    - type: 4
+      amount: 180000
+    upgradeDurationSeconds: 121973
+    powerContribution: 2523
+    productionPerHour: 66554
+    storageCapacity: 343427
+    requirements:
+    - buildingId: headquarters
+      level: 26
+  - level: 28
+    upgradeCost:
+    - type: 0
+      amount: 1259970
+    - type: 1
+      amount: 1574960
+    - type: 4
+      amount: 251990
+    upgradeDurationSeconds: 152466
+    powerContribution: 2654
+    productionPerHour: 78534
+    storageCapacity: 412112
+    requirements:
+    - buildingId: headquarters
+      level: 27
+  - level: 29
+    upgradeCost:
+    - type: 0
+      amount: 1763950
+    - type: 1
+      amount: 2204940
+    - type: 4
+      amount: 352790
+    upgradeDurationSeconds: 190582
+    powerContribution: 2788
+    productionPerHour: 92670
+    storageCapacity: 494535
+    requirements:
+    - buildingId: headquarters
+      level: 28
+  - level: 30
+    upgradeCost:
+    - type: 0
+      amount: 2469530
+    - type: 1
+      amount: 3086920
+    - type: 4
+      amount: 493910
+    upgradeDurationSeconds: 238228
+    powerContribution: 2924
+    productionPerHour: 109350
+    storageCapacity: 593441
+    requirements:
+    - buildingId: headquarters
+      level: 29
+  - level: 31
+    upgradeCost:
+    - type: 0
+      amount: 3457350
+    - type: 1
+      amount: 4321680
+    - type: 4
+      amount: 691470
+    upgradeDurationSeconds: 297785
+    powerContribution: 3061
+    productionPerHour: 129033
+    storageCapacity: 712130
+    requirements:
+    - buildingId: headquarters
+      level: 30
+  - level: 32
+    upgradeCost:
+    - type: 0
+      amount: 4840280
+    - type: 1
+      amount: 6050360
+    - type: 4
+      amount: 968060
+    upgradeDurationSeconds: 372231
+    powerContribution: 3200
+    productionPerHour: 152259
+    storageCapacity: 854556
+    requirements:
+    - buildingId: headquarters
+      level: 31
+  - level: 33
+    upgradeCost:
+    - type: 0
+      amount: 6776400
+    - type: 1
+      amount: 8470500
+    - type: 4
+      amount: 1355280
+    upgradeDurationSeconds: 465289
+    powerContribution: 3341
+    productionPerHour: 179666
+    storageCapacity: 1025467
+    requirements:
+    - buildingId: headquarters
+      level: 32
+  - level: 34
+    upgradeCost:
+    - type: 0
+      amount: 9486960
+    - type: 1
+      amount: 11858700
+    - type: 4
+      amount: 1897390
+    upgradeDurationSeconds: 581611
+    powerContribution: 3483
+    productionPerHour: 212006
+    storageCapacity: 1230560
+    requirements:
+    - buildingId: headquarters
+      level: 33
+  - level: 35
+    upgradeCost:
+    - type: 0
+      amount: 13281740
+    - type: 1
+      amount: 16602170
+    - type: 4
+      amount: 2656350
+    upgradeDurationSeconds: 727014
+    powerContribution: 3628
+    productionPerHour: 250167
+    storageCapacity: 1476673
+    requirements:
+    - buildingId: headquarters
+      level: 34

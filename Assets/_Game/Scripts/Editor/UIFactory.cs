@@ -63,7 +63,7 @@ namespace Deadzone.EditorTools
             tmp.alignment = alignment;
             tmp.fontStyle = style;
             tmp.raycastTarget = false;
-            tmp.overflowMode = TextOverflowModes.Ellipsis;
+            tmp.overflowMode = TextOverflowModes.Truncate; // the default TMP font has no '…' glyph
             return tmp;
         }
 

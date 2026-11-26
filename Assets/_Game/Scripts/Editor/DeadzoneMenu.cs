@@ -100,6 +100,87 @@ namespace Deadzone.EditorTools
             EditorSceneManager.OpenScene(EditorPaths.ScenePath(SceneNames.Base));
         }
 
+        [MenuItem("Tools/DEADZONE/Fix TMP Overflow (Ellipsis to Truncate)", priority = 44)]
+        private static void FixTmpOverflow()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            string openScene = EditorSceneManager.GetActiveScene().path;
+            int changed = UiTextNormalizer.Run();
+            if (!string.IsNullOrEmpty(openScene)) EditorSceneManager.OpenScene(openScene);
+            EditorUtility.DisplayDialog("Fix TMP Overflow", changed + " text component(s) changed.", "OK");
+        }
+
+        // ---- PHASE 02
+
+        [MenuItem("Tools/DEADZONE/Generate Building Database", priority = 45)]
+        private static void GenerateBuildingDatabase()
+        {
+            BuildingPrefabGenerator.GenerateAll(false);
+            Phase02Setup.GenerateBuildingData();
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate Building Level Data", priority = 46)]
+        private static void GenerateBuildingLevelData()
+        {
+            BuildingDatabaseGenerator.GenerateDefinitions();
+            if (EditorUtility.DisplayDialog("Generate Building Level Data",
+                    "Rebuild ALL level rows from each building's balance curve?\nManual edits to level rows will be lost. 'Fill missing' keeps them.",
+                    "Rebuild all", "Fill missing only"))
+            {
+                Debug.Log("[DEADZONE] Level rows rebuilt for " + BuildingDatabaseGenerator.GenerateLevels(true) + " building(s).");
+            }
+            else
+            {
+                Debug.Log("[DEADZONE] Level rows filled for " + BuildingDatabaseGenerator.GenerateLevels(false) + " building(s) (existing rows kept).");
+            }
+        }
+
+        [MenuItem("Tools/DEADZONE/Setup Phase 02 (Run After Phase 01)", priority = 1)]
+        private static void SetupPhase02()
+        {
+            if (!ProjectSetup.CheckTextMeshPro()) return;
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+            Phase02Setup.UpdateGameConfig();
+            BuildingPrefabGenerator.GenerateAll(false);
+            Phase02Setup.GenerateBuildingData();
+            UIPrefabGenerator.GenerateAll(false);
+            Debug.Log("[DEADZONE] Base scene: " + BuildingUiTools.PatchBaseScene());
+            Debug.Log("[DEADZONE] Military base: " + MilitaryBaseGenerator.Generate());
+            AssetDatabase.SaveAssets();
+
+            Phase02Validators.Report("Validate Buildings", Phase02Validators.ValidateBuildings(), false);
+            Phase02Validators.Report("Validate Economy", Phase02Validators.ValidateEconomy(), false);
+            Phase02Validators.Report("Validate Save Migration", Phase02Validators.ValidateSaveMigration(), false);
+            ProjectValidator.Run(false);
+            Debug.Log("[DEADZONE] Setup Phase 02 finished.");
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate Building UI", priority = 47)]
+        private static void GenerateBuildingUi()
+        {
+            if (!ProjectSetup.CheckTextMeshPro()) return;
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log("[DEADZONE] Building UI: " + BuildingUiTools.PatchBaseScene());
+        }
+
+        [MenuItem("Tools/DEADZONE/Generate Military Base", priority = 48)]
+        private static void GenerateMilitaryBase()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            BuildingPrefabGenerator.GenerateAll(false);
+            Debug.Log("[DEADZONE] Military base: " + MilitaryBaseGenerator.Generate());
+        }
+
+        [MenuItem("Tools/DEADZONE/Validate Buildings", priority = 22)]
+        private static void ValidateBuildings() => Phase02Validators.Report("Validate Buildings", Phase02Validators.ValidateBuildings(), true);
+
+        [MenuItem("Tools/DEADZONE/Validate Economy", priority = 23)]
+        private static void ValidateEconomy() => Phase02Validators.Report("Validate Economy", Phase02Validators.ValidateEconomy(), true);
+
+        [MenuItem("Tools/DEADZONE/Validate Save Migration", priority = 24)]
+        private static void ValidateSaveMigration() => Phase02Validators.Report("Validate Save Migration", Phase02Validators.ValidateSaveMigration(), true);
+
         [MenuItem("Tools/DEADZONE/Open UI Gallery", priority = 61)]
         private static void OpenUiGallery()
         {

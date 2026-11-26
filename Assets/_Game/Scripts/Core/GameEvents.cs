@@ -13,6 +13,10 @@ namespace Deadzone.Core
         public static event Action PlayerProfileChanged;
         public static event Action<bool> GameSaved;
         public static event Action LanguageChanged;
+        public static event Action<string> BuildingChanged;
+        public static event Action ConstructionChanged;
+        public static event Action<string, int> ConstructionCompleted;
+        public static event Action PowerChanged;
 
         public static void RaiseResourceChanged(ResourceType type, long amount) => ResourceChanged?.Invoke(type, amount);
         public static void RaiseBuildingSelected(BuildingSelectable building) => BuildingSelected?.Invoke(building);
@@ -20,6 +24,10 @@ namespace Deadzone.Core
         public static void RaisePlayerProfileChanged() => PlayerProfileChanged?.Invoke();
         public static void RaiseGameSaved(bool manual) => GameSaved?.Invoke(manual);
         public static void RaiseLanguageChanged() => LanguageChanged?.Invoke();
+        public static void RaiseBuildingChanged(string buildingId) => BuildingChanged?.Invoke(buildingId);
+        public static void RaiseConstructionChanged() => ConstructionChanged?.Invoke();
+        public static void RaiseConstructionCompleted(string buildingId, int newLevel) => ConstructionCompleted?.Invoke(buildingId, newLevel);
+        public static void RaisePowerChanged() => PowerChanged?.Invoke();
 
         /// <summary>Used when Enter Play Mode runs without a domain reload.</summary>
         public static void ClearAll()
@@ -30,6 +38,10 @@ namespace Deadzone.Core
             PlayerProfileChanged = null;
             GameSaved = null;
             LanguageChanged = null;
+            BuildingChanged = null;
+            ConstructionChanged = null;
+            ConstructionCompleted = null;
+            PowerChanged = null;
         }
     }
 }

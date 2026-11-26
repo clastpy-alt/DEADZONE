@@ -23,12 +23,30 @@ MonoBehaviour:
   - type: 1
     amount: 5000
   - type: 2
-    amount: 3000
+    amount: 5000
   - type: 3
-    amount: 2000
+    amount: 2500
   - type: 4
-    amount: 10000
+    amount: 1000
   - type: 5
-    amount: 100
+    amount: 200
   - type: 6
     amount: 100
+  startingBuildings:
+  - buildingId: headquarters
+    level: 1
+  - buildingId: barracks
+    level: 1
+  - buildingId: hospital
+    level: 1
+  - buildingId: research_lab
+    level: 1
+  - buildingId: food_farm
+    level: 1
+  - buildingId: steel_factory
+    level: 1
+  maxOfflineHours: 8
+  constructionQueueSlots: 1
+  cancelRefundPercent: 80
+  instantFinishDiamondsPerMinute: 1
+  tickIntervalSeconds: 0.5

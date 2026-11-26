@@ -17,7 +17,7 @@ namespace Deadzone.SaveSystem
     /// </summary>
     public sealed class SaveService
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 2;
 
         public enum LoadOutcome
         {
@@ -163,11 +163,10 @@ namespace Deadzone.SaveSystem
             }
         }
 
-        /// <summary>Upgrade data written by older versions. v1 is the baseline.</summary>
+        /// <summary>Upgrade data written by older versions (see SaveMigration).</summary>
         private static void Migrate(PlayerData data, int fromVersion)
         {
-            // Example for the future:
-            // if (fromVersion < 2) { data.newField = defaultValue; }
+            SaveMigration.Migrate(data, fromVersion, System.DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         }
 
         private static void Sanitize(PlayerData data)
@@ -180,6 +179,7 @@ namespace Deadzone.SaveSystem
             if (data.combatPower < 0) data.combatPower = 0;
             if (data.resources == null) data.resources = new List<ResourceAmount>();
 
+            SaveMigration.Sanitize(data, System.DateTimeOffset.UtcNow.ToUnixTimeSeconds());
             data.resources.RemoveAll(r => r == null);
             foreach (ResourceAmount r in data.resources)
             {

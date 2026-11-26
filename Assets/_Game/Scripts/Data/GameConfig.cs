@@ -23,6 +23,48 @@ namespace Deadzone.Data
             }
         }
 
+        [Serializable]
+        public struct StartingBuilding
+        {
+            public string buildingId;
+            public int level;
+
+            public StartingBuilding(string buildingId, int level)
+            {
+                this.buildingId = buildingId;
+                this.level = level;
+            }
+        }
+
+        /// <summary>Buildings a brand new base starts with. Also used when migrating version 1 saves.</summary>
+        public static List<StartingBuilding> DefaultStartingBuildings()
+        {
+            return new List<StartingBuilding>
+            {
+                new StartingBuilding("headquarters", 1),
+                new StartingBuilding("barracks", 1),
+                new StartingBuilding("hospital", 1),
+                new StartingBuilding("research_lab", 1),
+                new StartingBuilding("food_farm", 1),
+                new StartingBuilding("steel_factory", 1)
+            };
+        }
+
+        /// <summary>The prototype test economy. Only applied to NEW saves.</summary>
+        public static List<StartingResource> DefaultStartingResources()
+        {
+            return new List<StartingResource>
+            {
+                new StartingResource(ResourceType.Food, 5000),
+                new StartingResource(ResourceType.Wood, 5000),
+                new StartingResource(ResourceType.Steel, 5000),
+                new StartingResource(ResourceType.Fuel, 2500),
+                new StartingResource(ResourceType.Gold, 1000),
+                new StartingResource(ResourceType.Diamonds, 200),
+                new StartingResource(ResourceType.Energy, 100)
+            };
+        }
+
         [Header("General")]
         [Min(15)] public int targetFrameRate = 60;
         [Min(5f)] public float autosaveIntervalSeconds = 30f;
@@ -32,16 +74,16 @@ namespace Deadzone.Data
         [Header("Economy")]
         public long defaultResourceCapacity = 100000;
 
-        public List<StartingResource> startingResources = new List<StartingResource>
-        {
-            new StartingResource(ResourceType.Food, 5000),
-            new StartingResource(ResourceType.Wood, 5000),
-            new StartingResource(ResourceType.Steel, 3000),
-            new StartingResource(ResourceType.Fuel, 2000),
-            new StartingResource(ResourceType.Gold, 10000),
-            new StartingResource(ResourceType.Diamonds, 100),
-            new StartingResource(ResourceType.Energy, 100)
-        };
+        public List<StartingResource> startingResources = DefaultStartingResources();
+
+        [Header("Buildings and time")]
+        public List<StartingBuilding> startingBuildings = DefaultStartingBuildings();
+        [Tooltip("Production is credited for at most this many hours while the game is closed.")]
+        [Min(0.1f)] public float maxOfflineHours = 8f;
+        [Min(1)] public int constructionQueueSlots = 1;
+        [Range(0, 100)] public int cancelRefundPercent = 80;
+        [Min(1)] public int instantFinishDiamondsPerMinute = 1;
+        [Min(0.1f)] public float tickIntervalSeconds = 0.5f;
 
         public long GetCapacity(ResourceType type)
         {

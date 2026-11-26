@@ -21,7 +21,7 @@ namespace Deadzone.Core
         [SerializeField] private Vector3 startFocus = new Vector3(0f, 0f, 2f);
 
         [Header("Zoom (orthographic size)")]
-        [SerializeField] private float startZoom = 14f;
+        [SerializeField] private float startZoom = 22f; // portrait 9:16 needs a wide view; 14 (PHASE 01) showed only ~16 units
         [SerializeField] private float minZoom = 7f;
         [SerializeField] private float maxZoom = 34f;
         [SerializeField] private float wheelZoomStep = 1.5f;

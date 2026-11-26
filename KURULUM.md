@@ -63,6 +63,15 @@ Mobil dokunma için: Game görünümünde Simulator'a geç (sol üstte "Game" ya
 ## G. Git
 12. Proje kökünde: `git init` · `git add .` · `git commit -m "PHASE 01.5: foundation + UI components"`
 
+## H. PHASE 02 kurulumu (v0.2.0) — var olan PHASE 01 projesinde
+1. Projeyi aç, derlemenin bitmesini bekle (Console'da kırmızı hata olmamalı).
+2. **Tools > DEADZONE > Setup Phase 02 (Run After Phase 01)**: GameConfig'i günceller, bina prefablarını ve 22 `BuildingDefinition` + `BuildingDatabase` asset'ini üretir, UI prefablarını üretir, Base sahnesini yamalar (bilgi sayfası, inşaat penceresi, kamera, askerî üs propları) ve doğrulayıcıları çalıştırır. Tekrar çalıştırmak kopya üretmez; var olan sahne/prefab/asset korunur.
+3. Tek tek araçlar: Generate Building Database · Generate Building Level Data · Generate Building UI · Generate Military Base · Validate Buildings · Validate Economy · Validate Save Migration.
+4. **Window > General > Test Runner > EditMode > Run All**: 105 test geçmeli.
+5. Play (Bootstrap'tan): bir binaya tıkla → bilgi sayfası; **Geliştir** → **İnşaat** düğmesi → Hızlandır/İptal; Gıda Çiftliği'nde **Topla**.
+6. Test ekonomisi (Gıda/Odun/Çelik 5000, Yakıt 2500, Altın 1000, Elmas 200, Enerji 100) yalnız YENİ kayıtta uygulanır. Eski kaydın var olduğunu unutma: Ana menü > Yeni Oyun kaydı sıfırlar (yalnız test kaydında kullan).
+7. Kayıt formatı v2; PHASE 01 kayıtları açılışta kayıpsız göç eder, dosya silinmez.
+
 ## Sorun giderme
 - **Türkçe karakterler (İ, ş, ğ) kare/boş görünüyor:** TMP varsayılan fontunda eksik olabilir. Bana ekran görüntüsünü gönder; font fallback eklenecek.
 - **Setup "TextMeshPro resources missing" diyor:** 4. adımı yap, aracı yeniden çalıştır.
